@@ -3,10 +3,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
-public class DanhSachNhanVien {
+public class DanhSachNhanVien{
 	NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
 	static void showMenu()
@@ -23,8 +25,15 @@ public class DanhSachNhanVien {
 		System.out.println();
 	}
 	
-	public void nhapDanhSach()
-	{	
+	public void docFile()
+	{	/*
+	 	Bước 1. Khởi tạo file
+	 	Bước 2. Kiểm tra đủ 7 trường cơ bản của NhanVien hay không?
+	 	Bước 3. Tùy vào trường loaiNhanVien mà khởi tạo đối tượng tương ứng
+	 	Bước 4. Gọi các hàm set để cập nhật thông tin 7 trường cơ bản
+	 	Bước 5. Kiểm tra nv có là instance của các lớp ? => Set các trường tương ứng
+	 	Bước 6. Thêm nv vào mảng
+	 	*/
 		try 
 		{
 			FileReader fr = new FileReader("data.txt");
@@ -37,7 +46,7 @@ public class DanhSachNhanVien {
 				if(st == null)
 					break;
 				String s[] = st.split("\t");
-				if(s.length == 6)
+				if(s.length >= 7)
 				{
 					String maNhanVien = s[0].trim();
 					String hoTen = s[1].trim();
@@ -45,10 +54,61 @@ public class DanhSachNhanVien {
 					String ngaySinh = s[3].trim();
 					String soDienThoai = s[4].trim();
 					boolean isDeleted = Boolean.parseBoolean(s[5].trim());
-			
-					NhanVien nv = new NhanVien(maNhanVien, hoTen, gioiTinh, ngaySinh, soDienThoai, isDeleted);
+					String loaiNhanVien = s[6].trim();
+					
+					NhanVien nv = null;
+					switch(loaiNhanVien)
+					{
+						case "NhanVienChinhThuc":
+							nv = new NhanVienChinhThuc();
+							break;
+						case "NhanVienHopDong":
+							nv = new NhanVienHopDong();
+							break;
+						case "ThucTapSinh":
+							nv = new ThucTapSinh();
+							break;
+						case "QuanLi":
+							nv = new QuanLi();
+							break;
+						default:
+							nv = new NhanVien();
+							break;
+					}
+					
+					/*Cap nhat thong tin cho cac nhan vien*/
+					nv.setMaNhanVien(maNhanVien);
+					nv.setHoTen(hoTen);
+					nv.setGioiTinh(gioiTinh);
+					nv.setNgaySinh(ngaySinh);
+					nv.setSoDienThoai(soDienThoai);
 					nv.setDeleted(isDeleted);
 					
+					if(nv instanceof NhanVienChinhThuc)
+					{
+						NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nv;
+						nvChinhThuc.capBacNhanVien = Integer.parseInt(s[7].trim());
+						nvChinhThuc.luongNhanVien = Double.parseDouble(s[8].trim());
+					}
+					else if(nv instanceof NhanVienHopDong)
+					{
+						NhanVienHopDong nvHopDong = (NhanVienHopDong) nv;
+						nvHopDong.ngayBatDau = LocalDate.parse(s[7].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+						nvHopDong.ngayKetThuc = LocalDate.parse(s[8].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+						nvHopDong.luongHopDong = Double.parseDouble(s[9].trim());
+					}
+					else if(nv instanceof ThucTapSinh)
+					{
+						ThucTapSinh thucTapSinh = (ThucTapSinh) nv;
+						thucTapSinh.capBacThucTap = Integer.parseInt(s[7].trim());
+						thucTapSinh.tienPhuCap = Double.parseDouble(s[8].trim());	
+					}
+					else if(nv instanceof QuanLi)
+					{
+						QuanLi quanLi = (QuanLi) nv;
+						quanLi.capBacQuanLi = Integer.parseInt(s[7].trim());
+						quanLi.luongQuanLi = Double.parseDouble(s[8].trim());
+					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
 					System.out.println("Nhap thanh cong nhan vien " +hoTen);
@@ -67,14 +127,59 @@ public class DanhSachNhanVien {
 		}
 	}
 	
-	
+	public void ghiFile()
+	{
+		try {
+			FileWriter fw = new FileWriter("data.txt", true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			for(int i=0; i < ds.length; i++)
+			{
+				String st ="";
+				st += ds[i].getMaNhanVien() + "\t";
+				st += ds[i].getHoTen() + "\t";
+				st += ds[i].getGioiTinh() + "\t";
+				st += ds[i].getNgaySinh() + "\t";
+				st += ds[i].getSoDienThoai() + "\t";
+				st += ds[i].isDeleted() + "\t";
+				
+				if(ds[i] instanceof NhanVienChinhThuc)
+				{
+					NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) ds[i];
+					st += "NhanVienChinhThuc" + "\t" + nvChinhThuc.capBacNhanVien + "\t" + nvChinhThuc.luongNhanVien;
+				}
+				else if(ds[i] instanceof NhanVienHopDong)
+				{
+					NhanVienHopDong nvHopDong = (NhanVienHopDong) ds[i];
+					st += "NhanVienHopDong" + "\t" + nvHopDong.ngayBatDau.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\t"
+							+ nvHopDong.ngayKetThuc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\t" + nvHopDong.luongHopDong;
+				}
+				else if(ds[i] instanceof ThucTapSinh)
+				{
+					ThucTapSinh thucTapSinh = (ThucTapSinh) ds[i];
+					st += "ThucTapSinh" + "\t" + thucTapSinh.tienPhuCap + "\t" + thucTapSinh.capBacThucTap;
+				}
+				else if(ds[i] instanceof QuanLi)
+				{
+					QuanLi quanLi = (QuanLi) ds[i];
+					st += "QuanLi" + "\t" + quanLi.capBacQuanLi + "\t" + quanLi.luongQuanLi;
+				}
+				bw.write(st);
+				bw.newLine();
+			}
+			bw.close();
+			fw.close();
+			
+		} catch(Exception e) {
+			
+		}
+	}
 	public void xuatDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
 		for(int i=0; i < ds.length; i++)
 		{	
 			if(ds[i].isDeleted() == false)
 			{
-				System.out.printf("Thong tin nhan vien thu %d \n", i+1);
 				ds[i].xuatThongTinNhanVien();
 			}
 			
@@ -94,7 +199,6 @@ public class DanhSachNhanVien {
 			for(int i = 0; i < n; i++)
 			{	
 				NhanVien nv;
-				System.out.printf("Moi nhap thong tin nhan vien thu %d \n", i+1);
 				System.out.println("Moi nhap loai nhan vien");
 				System.out.println("1. Quan ly");
 				System.out.println("2. Nhan vien chinh thuc");
@@ -122,7 +226,10 @@ public class DanhSachNhanVien {
 				ds[ds.length-1]= nv;
 			} 
 			if(ds.length > originLength)
+			{
 				System.out.printf("Them thanh cong %d nhan vien \n", ds.length-originLength);
+				ghiFile();
+			}
 			else System.out.println("Them that bai");
 			break;
 		}
@@ -146,11 +253,12 @@ public class DanhSachNhanVien {
 		
 		if(nvCanSua != null)
 		{
-			System.out.println("Nhan vien can sua:");
-			nvCanSua.xuatThongTinNhanVien();
+			System.out.println("Nhan vien can sua: " +nvCanSua.maNhanVien);
 			/*Nhập lại 1 thông tin hay nhập lại hết????*/
-			System.out.println("Moi nhap thong tin moi cho nhan vien");
+			System.out.println("Moi nhap thong tin cho nhan vien");
 			nvCanSua.nhapThongTinNhanVien();
+			
+			ghiFile();
 		}
 		else System.out.printf("Khong tim nhan nhan vien voi ma %s \n", maNhanVienCanSua);
 	}
@@ -205,7 +313,7 @@ public class DanhSachNhanVien {
 			switch(choose)
 			{
 				case 1:
-					dsnv.nhapDanhSach();
+					dsnv.docFile();
 					break;
 				case 2:
 					dsnv.xuatDanhSach();
