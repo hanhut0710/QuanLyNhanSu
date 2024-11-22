@@ -36,7 +36,7 @@ public class DanhSachNhanVien{
 	 	*/
 		try 
 		{
-			FileReader fr = new FileReader("data.txt");
+			FileReader fr = new FileReader("NhanVien.txt");
 			BufferedReader br = new BufferedReader(fr);
 			String st;
 			
@@ -130,7 +130,7 @@ public class DanhSachNhanVien{
 	public void ghiFile()
 	{
 		try {
-			FileWriter fw = new FileWriter("data.txt", true);
+			FileWriter fw = new FileWriter("NhanVien.txt");
 			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(int i=0; i < ds.length; i++)
@@ -171,7 +171,7 @@ public class DanhSachNhanVien{
 			fw.close();
 			
 		} catch(Exception e) {
-			
+			System.out.println("Loi ghi file");
 		}
 	}
 	public void xuatDanhSach()
