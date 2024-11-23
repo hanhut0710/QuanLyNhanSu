@@ -307,7 +307,18 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	
 	@Override
 	public void timKiem()
-	{
+	{	/*
+	 	Bước 1. Nhập thông tin cần tìm (nhớ cắt bỏ khoảng trắng String.trim() );
+	 	Bước 2. Kiểm tra đã nhập ít nhất 1 thông tin ?=> Ko có return
+	 	Bước 3. Xử lý ngày sinh try-catch
+	 	Bước 4. Khởi tạo boolean found=false. Duyệt vòng lặp kiểm tra
+	 			4.1 Kiểm tra
+	 			+ Thông tin có rỗng hay không
+	 			+ 'thông tin cần tìm' có được tìm thấy hay không
+	 			4.2 Kiểm tra 1 trong 5 tiêu chí và isDeleted = false => found=true -> xuất ra.
+	 	*/
+		/*  Tìm kiếm gần đúng: Tên
+			Tìm kiếm chính xác: MãNV, SĐT, Giới tính, Ngày sinh */
 		System.out.println("Nhap thong tin nhan vien can tim");
 		
 		System.out.println("Moi nhap ma nhan vien (de trong neu khong tim theo ma)");
@@ -328,7 +339,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			System.out.println("Vui long nhap it nhat 1 thong tin tim kiem");
 			return;
 		}
-		boolean found= false;
+		
+		
 		LocalDate ngaySinhNhap = null;
 		try 
 		{
@@ -339,6 +351,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			System.out.println("Dinh dang khong hop le");
 			return;
 		}
+		
+		boolean found= false;
 		for(NhanVien nv : ds)
 		{
 			boolean checkedMa = maNhanVienTimKiem.isEmpty() || nv.getMaNhanVien().equalsIgnoreCase(maNhanVienTimKiem);

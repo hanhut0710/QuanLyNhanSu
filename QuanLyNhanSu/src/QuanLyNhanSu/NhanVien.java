@@ -141,10 +141,6 @@ public class NhanVien {
 		this.isDeleted = isDeleted;
 	}
 
-	public double tinhLuong() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	
 	
