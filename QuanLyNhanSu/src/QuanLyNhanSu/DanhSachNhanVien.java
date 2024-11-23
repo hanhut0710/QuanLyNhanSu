@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
-public class DanhSachNhanVien{
+public class DanhSachNhanVien implements QuanLiDanhSach{
 	NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
 	static void showMenu()
@@ -25,6 +25,7 @@ public class DanhSachNhanVien{
 		System.out.println();
 	}
 	
+	@Override
 	public void docFile()
 	{	/*
 	 	Bước 1. Khởi tạo file
@@ -127,6 +128,7 @@ public class DanhSachNhanVien{
 		}
 	}
 	
+	@Override
 	public void ghiFile()
 	{
 		try {
@@ -171,10 +173,12 @@ public class DanhSachNhanVien{
 			fw.close();
 			
 		} catch(Exception e) {
-			System.out.println("Loi ghi file");
+			System.out.println("Loi ghi file" +e.getMessage());
 		}
 	}
-	public void xuatDanhSach()
+	
+	@Override
+	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
 		for(int i=0; i < ds.length; i++)
 		{	
@@ -186,6 +190,7 @@ public class DanhSachNhanVien{
 		}
 	}
 	
+	@Override
 	public void them()
 	{	
 		while(true)
@@ -236,12 +241,14 @@ public class DanhSachNhanVien{
 		
 	}
 	
+	@Override
 	public void sua()
 	{
 		
 		System.out.println("Moi nhap ma nhan vien can sua");
 		String maNhanVienCanSua = sc.nextLine();
 		NhanVien nvCanSua = null;
+		
 		for(int i=0; i < ds.length; i++)
 		{
 			if(ds[i].getMaNhanVien().equalsIgnoreCase(maNhanVienCanSua))
@@ -263,6 +270,7 @@ public class DanhSachNhanVien{
 		else System.out.printf("Khong tim nhan nhan vien voi ma %s \n", maNhanVienCanSua);
 	}
 	
+	@Override
 	public void xoa()
 	{
 		System.out.println("Moi nhap ma nhan vien can xoa");
@@ -294,11 +302,46 @@ public class DanhSachNhanVien{
 		else System.out.printf("Khong tim thay nhan vien voi ma %s \n", maNhanVienCanXoa);
 	}
 	
+	@Override
 	public void timKiem()
+	{
+		System.out.println("Nhap thong tin nhan vien can tim");
+		
+		System.out.println("Moi nhap ma nhan vien (de trong neu khong tim theo ma)");
+		String maNhanVienTimKiem = sc.nextLine().trim();
+		System.out.println("Moi nhap ten nhan vien (de trong neu khong tim theo ten)");
+		String tenNhanVienTimKiem = sc.nextLine().trim();
+		System.out.println("Moi nhap so dien thoai (de trong neu khong tim theo sdt)");
+		String soDienThoaiTimKiem = sc.nextLine().trim();
+		
+		if(maNhanVienTimKiem.isEmpty() && tenNhanVienTimKiem.isEmpty() && soDienThoaiTimKiem.isEmpty())
+		{
+			System.out.println("Vui long nhap it nhat 1 thong tin tim kiem");
+			return;
+		}
+		boolean found= false;
+		for(NhanVien nv : ds)
+		{
+			boolean checkedMa = maNhanVienTimKiem.isEmpty() || nv.getMaNhanVien().equalsIgnoreCase(maNhanVienTimKiem);
+			boolean checkedTen = tenNhanVienTimKiem.isEmpty() || nv.getHoTen().toLowerCase().contains(tenNhanVienTimKiem.toLowerCase());
+			boolean checkedSDT = soDienThoaiTimKiem.isEmpty() || nv.getSoDienThoai().equalsIgnoreCase(soDienThoaiTimKiem);
+			
+			//Nếu có bất kỳ tiêu chí nào khớp và QUAN TRỌNG: nhân viên chưa bị xóa
+			if((checkedMa && checkedTen && checkedSDT) && nv.isDeleted() == false)
+			{
+				nv.xuatThongTinNhanVien();
+				found = true;
+			}
+		}
+		if(found == false)
+			System.out.println("Khong tim thay nhan vien nao phu hop voi tieu chi");
+	}
+	
+	@Override
+	public void thongKe()
 	{
 		
 	}
-	
 	/*Thuc thi chuong trinh*/
 	public static void main (String [] args)
 	{	
@@ -316,7 +359,7 @@ public class DanhSachNhanVien{
 					dsnv.docFile();
 					break;
 				case 2:
-					dsnv.xuatDanhSach();
+					dsnv.hienThiDanhSach();
 					break;
 				case 3:
 					dsnv.them();
@@ -331,6 +374,7 @@ public class DanhSachNhanVien{
 					dsnv.timKiem();
 					break;
 				case 7:
+					dsnv.thongKe();
 					break;
 				case 8:
 					System.out.println("Thoat chuong trinh thanh cong!");
