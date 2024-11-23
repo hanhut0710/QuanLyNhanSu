@@ -1,8 +1,12 @@
 package QuanLyNhanSu;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.NotSerializableException;
 import java.io.ObjectInput;
@@ -80,6 +84,12 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 			sc.nextLine();
 			switch(luaChon) {
 				case 1:
+					do {
+						System.out.print("Nhập mã dự án: ");
+						this.danhSachDuAn[choice - 1].setMaDuAn(sc.nextLine());
+						if(!checkMaDuAn(this.danhSachDuAn[choice -1].getMaDuAn()))
+							System.out.println("Mã dự án đã tồn tại, vui lòng nhập lại mã dự án !!!");
+					} while (!checkMaDuAn(this.danhSachDuAn[choice -1].getMaDuAn()));
 					System.out.print("Nhập mã dự án: ");
 					this.danhSachDuAn[choice - 1].setMaDuAn(sc.nextLine());
 					break;
@@ -225,7 +235,11 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 				timKiemTheoTen();
 				break;
 			case 3:
-				
+				timKiemTheoNgayBatDau();
+				break;
+			case 4:
+				timKiemTheoNgayKetThuc();
+				break;
 			default:
 				System.out.println("Lụa chọn không tồn tại");
 				break;
@@ -298,6 +312,36 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		
 	}
 	
+	public void timKiemTheoNgayKetThuc() {
+		boolean success = false;
+		Scanner sc = new Scanner(System.in);
+		Date date = null ;
+		do {
+			try {
+				System.out.println("------Tìm kiếm theo ngày dự kiến kết thúc------");
+				System.out.println("Nhập ngày dự kiến kết thúc dự án(dd/MM/yyyy): ");
+				date = new Date(sc.nextLine());
+				success = true;
+			} 
+			catch(NumberFormatException e) {
+				System.out.println("Vui lòng nhập ngày đúng định dạng(dd/MM/yyyy) !!!");
+			}
+		}while(!success);
+		int k = 0;
+		for(DuAn x : danhSachDuAn) {
+			if(x.getDuKienKetThuc().getDate().equals(date.getDate())) {
+				x.nhapThongTinDuAn();
+				k++;
+			}
+				
+		}
+		
+		if(k == 0) {
+			System.out.println("Dự án không tồn tại !!!");
+		}
+		
+	}
+	
 	public void checkStatus() {
 		for(DuAn x: danhSachDuAn)
 		{
@@ -312,47 +356,123 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 	@Override
 	public void docFile() {
 		// TODO Auto-generated method stub
+//		try {
+//			FileInputStream fileIn = new FileInputStream("DuAn.txt");
+//			ObjectInputStream in = new ObjectInputStream(fileIn);
+//			
+//			while(fileIn.available() > 0) {
+//				DuAn duAn = (DuAn) in.readObject();
+//				danhSachDuAn = Arrays.copyOf(danhSachDuAn, danhSachDuAn.length + 1);
+//				danhSachDuAn[danhSachDuAn.length - 1] = duAn;
+//				stt++;
+//			}
+//			
+//			in.close();
+//			fileIn.close();
+//		} catch(FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		} catch(ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		
 		try {
-			FileInputStream fileIn = new FileInputStream("DuAn.txt");
-			ObjectInputStream in = new ObjectInputStream(fileIn);
+			FileReader fr = new FileReader("DuAn.txt");
+			BufferedReader br = new BufferedReader(fr);
+			String st;
 			
-			while(fileIn.available() > 0) {
-				DuAn duAn = (DuAn) in.readObject();
-				danhSachDuAn = Arrays.copyOf(danhSachDuAn, danhSachDuAn.length + 1);
-				danhSachDuAn[danhSachDuAn.length - 1] = duAn;
-				stt++;
+			while(true) {
+				st=br.readLine();
+				if(st == null)
+					break;
+				String part[] = st.split("\t");
+				if(part.length == 5) {
+					String maDuAn = part[0].trim();
+					String tenDuAn = part[1].trim();
+					
+					Date ngayBatDau = null;
+					Date duKienKetThuc = null;
+					try {
+						ngayBatDau = new Date(part[2].trim());
+					} catch (NumberFormatException e) {
+						System.out.println("dữ liệu ngày ko đúng định dạng, hệ thống sẽ trả về chuỗi null !!!");
+						ngayBatDau.setDate(null);
+					}
+					try {
+						duKienKetThuc = new Date(part[3].trim());
+					} catch (NumberFormatException e) {
+						System.out.println("dữ liệu ngày ko đúng định dạng, hệ thống sẽ trả về chuỗi null !!!");
+						duKienKetThuc.setDate(null);
+					}
+					String trangThaiXoa = part[4].trim();
+					DuAn duAn = new DuAn();
+					duAn.setMaDuAn(maDuAn);
+					duAn.setTenDuAn(tenDuAn);
+					duAn.setNgayBatDau(ngayBatDau.getDate());
+					duAn.setDuKienKetThuc(duKienKetThuc.getDate());
+					System.out.println(trangThaiXoa);
+					if(trangThaiXoa.toLowerCase().equals("true".trim().toLowerCase()))
+						duAn.setTrangThaiXoaTrue();
+					else if(trangThaiXoa.toLowerCase().equals("false".trim().toLowerCase()))
+						duAn.setTrangThaiXoaFalse();
+					else {
+						System.out.println("Trạng thái xóa ko hợp lệ, hệ thống sẽ tự trả về true");
+						duAn.setTrangThaiXoaTrue();
+					}
+					this.danhSachDuAn = Arrays.copyOf(danhSachDuAn, danhSachDuAn.length + 1);
+					this.danhSachDuAn[danhSachDuAn.length - 1] = duAn;
+					stt++;
+				}
+				else
+					break;
+				
 			}
-			
-			in.close();
-			fileIn.close();
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
-		} catch(IOException e) {
-			e.printStackTrace();
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.out.println("File không tồn tại");
+		} catch (Exception e) {
+			System.out.println("Lỗi khi đọc file");
 		}
-		
 	}
 	@Override
 	public void ghiFile() {
 		// TODO Auto-generated method stub
+//		try {
+//			FileOutputStream fileOut = new FileOutputStream("DuAn.txt");
+//			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+//			
+//			for(DuAn x : danhSachDuAn) {
+//				out.writeObject(x);
+//			}
+//			
+//			out.close();
+//			fileOut.close();
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (NotSerializableException e) {
+//			e.printStackTrace();
+//		} catch(IOException e) {
+//			e.printStackTrace();
+//		}
 		try {
-			FileOutputStream fileOut = new FileOutputStream("DuAn.txt");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			FileWriter fw = new FileWriter("DuAn.txt");
+			BufferedWriter bw = new BufferedWriter(fw);
 			
 			for(DuAn x : danhSachDuAn) {
-				out.writeObject(x);
+				String st = "";
+				st += x.getMaDuAn() + "\t";
+				st += x.getTenDuAn() + "\t";
+				st += x.getNgayBatDau().getDate() + "\t";
+				st += x.getDuKienKetThuc().getDate() + "\t";
+				st += x.isTrangThaiXoa() + "\t";
+				
+				bw.write(st);
+				bw.newLine();
 			}
-			
-			out.close();
-			fileOut.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (NotSerializableException e) {
-			e.printStackTrace();
-		} catch(IOException e) {
-			e.printStackTrace();
+			bw.close();
+			fw.close();
+		} catch (Exception e) {
+			System.out.println("Lỗi ghi file");
 		}
 	}
 	

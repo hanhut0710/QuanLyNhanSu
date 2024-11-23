@@ -122,6 +122,11 @@ public class NhanVien {
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
+	public double tinhLuong() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	

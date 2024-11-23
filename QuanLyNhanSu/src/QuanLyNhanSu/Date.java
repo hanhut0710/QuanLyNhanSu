@@ -1,5 +1,7 @@
-package QuanLyNhanSu;
+package QuanLyNhanSu;	
+
 import java.io.Serializable;
+
 public class Date implements Serializable {
 	/**
 	 * 

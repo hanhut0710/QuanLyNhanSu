@@ -90,31 +90,37 @@ public class DuAn implements Serializable{
 		return ngayBatDau;
 	}
 	public void setNgayBatDau(String ngayBatDau) {
-		boolean success;
+		boolean success = false;
+		do {
 			try {
-				this.ngayBatDau = new Date(ngayBatDau);
-				if(this.ngayBatDau.getDate() == null) {
-					System.out.println("Lỗi: Ngày nhập không hợp lệ !!!");
-				}
+				do {
+					this.ngayBatDau = new Date(ngayBatDau);
+					if(this.ngayBatDau.getDate() == null) 
+						System.out.println("Lỗi: Ngày nhập không hợp lệ !!!");
+				} while (this.ngayBatDau.getDate() == null);
 				success = true;
 			} catch (NumberFormatException e) {
 				System.out.println("Lỗi: Ngày nhập đúng định dạng(dd/MM/yyyy) !!!");			
 			}
+		} while (!success);
 	}
 	public Date getDuKienKetThuc() {
 		return duKienKetThuc;
 	}
 	public void setDuKienKetThuc(String duKienKetThuc) {
-		boolean success;
-		try {
-			this.duKienKetThuc = new Date(duKienKetThuc);
-			if(this.duKienKetThuc.getDate() == null) {
-				System.out.println("Lỗi: Ngày nhập không hợp lệ !!!");
+		boolean success = false;
+		do {
+			try {
+				do {
+					this.duKienKetThuc = new Date(duKienKetThuc);
+					if(this.duKienKetThuc.getDate() == null) 
+						System.out.println("Lỗi: Ngày nhập không hợp lệ !!!");
+				} while (this.duKienKetThuc.getDate() == null);
+				success = true;
+			} catch (NumberFormatException e) {
+				System.out.println("Lỗi: Ngày nhập đúng định dạng(dd/MM/yyyy) !!!");			
 			}
-			success = true;
-		} catch (NumberFormatException e) {
-			System.out.println("Lỗi: Ngày nhập đúng định dạng(dd/MM/yyyy) !!!");			
-		}
+		} while (!success);
 	}
 	public boolean isTrangThaiXoa() {
 		return trangThaiXoa;
