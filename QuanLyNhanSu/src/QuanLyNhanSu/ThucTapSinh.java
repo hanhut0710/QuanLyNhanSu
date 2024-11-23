@@ -1,4 +1,4 @@
-package QLNhanSu;
+package QuanLyNhanSu;
 
 public class ThucTapSinh extends NhanVien implements Luong {
     public double tienPhuCap;

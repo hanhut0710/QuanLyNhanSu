@@ -1,4 +1,4 @@
-package QLNhanSu;
+package QuanLyNhanSu;
 
 import java.util.Date;
 import java.util.Scanner;
@@ -121,6 +121,11 @@ public class NhanVien {
 
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public double tinhLuong() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package QLNhanSu;
+package QuanLyNhanSu;
 
 import java.util.Scanner;
 import java.time.LocalDate;
