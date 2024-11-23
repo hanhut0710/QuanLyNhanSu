@@ -1,6 +1,6 @@
-NV001	Nguyen Van A	Nam	2000-02-28	1236549870	false	QuanLi	2	20000.0
-NV002	Tran The Teo	Nu	2001-03-26	1234568891	false	NhanVienHopDong	01/01/2023	31/12/2023	3000000.0
-NV004	Nguyen Thi Tu	Nu	2000-09-28	1234567890	false	NhanVienChinhThuc	2	20000.0
-NV005	Duong Dinh An	Nam	1999-05-14	1234567890	false	NhanVienChinhThuc	2	20000.0
-NV005	Duong My Dinh	Nam	2000-08-08	1234567890	false	QuanLi	1	10000.0
-NV008	Tran Thi Buoi	Nu	2002-09-09	1234569870	false	NhanVienChinhThuc	2	20000.0
+NV001	Nguyen Van A	Nam	28/02/2000	1236549870	false	QuanLi	2	20000.0
+NV002	Tran The Teo	Nu	26/03/2001	1234568891	false	NhanVienHopDong	01/01/2023	31/12/2023	3000000.0
+NV004	Nguyen Thi Tu	Nu	28/09/1998	1234567890	false	NhanVienChinhThuc	2	20000.0
+NV005	Duong Dinh An	Nam	14/05/1997	1234567890	false	NhanVienChinhThuc	2	20000.0
+NV005	Duong My Dinh	Nam	08/08/2000	1234567890	false	QuanLi	1	10000.0
+NV008	Tran Thi Buoi	Nu	09/09/2000	1234569870	false	NhanVienChinhThuc	2	20000.0
