@@ -88,7 +88,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					if(nv instanceof NhanVienChinhThuc)
 					{
 						NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nv;
-						nvChinhThuc.capBacNhanVien = Integer.parseInt(s[7].trim());
+						nvChinhThuc.heSoLuongNhanVien = Integer.parseInt(s[7].trim());
 						nvChinhThuc.luongNhanVien = Double.parseDouble(s[8].trim());
 					}
 					else if(nv instanceof NhanVienHopDong)
@@ -101,13 +101,13 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					else if(nv instanceof ThucTapSinh)
 					{
 						ThucTapSinh thucTapSinh = (ThucTapSinh) nv;
-						thucTapSinh.capBacThucTap = Integer.parseInt(s[7].trim());
+						thucTapSinh.heSoLuongThucTap = Integer.parseInt(s[7].trim());
 						thucTapSinh.tienPhuCap = Double.parseDouble(s[8].trim());	
 					}
 					else if(nv instanceof QuanLi)
 					{
 						QuanLi quanLi = (QuanLi) nv;
-						quanLi.capBacQuanLi = Integer.parseInt(s[7].trim());
+						quanLi.heSoLuongQuanLi = Integer.parseInt(s[7].trim());
 						quanLi.luongQuanLi = Double.parseDouble(s[8].trim());
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
@@ -148,7 +148,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				if(ds[i] instanceof NhanVienChinhThuc)
 				{
 					NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) ds[i];
-					st += "NhanVienChinhThuc" + "\t" + nvChinhThuc.capBacNhanVien + "\t" + nvChinhThuc.luongNhanVien;
+					st += "NhanVienChinhThuc" + "\t" + nvChinhThuc.heSoLuongNhanVien + "\t" + nvChinhThuc.luongNhanVien;
 				}
 				else if(ds[i] instanceof NhanVienHopDong)
 				{
@@ -159,12 +159,12 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				else if(ds[i] instanceof ThucTapSinh)
 				{
 					ThucTapSinh thucTapSinh = (ThucTapSinh) ds[i];
-					st += "ThucTapSinh" + "\t" + thucTapSinh.tienPhuCap + "\t" + thucTapSinh.capBacThucTap;
+					st += "ThucTapSinh" + "\t" + thucTapSinh.tienPhuCap + "\t" + thucTapSinh.heSoLuongThucTap;
 				}
 				else if(ds[i] instanceof QuanLi)
 				{
 					QuanLi quanLi = (QuanLi) ds[i];
-					st += "QuanLi" + "\t" + quanLi.capBacQuanLi + "\t" + quanLi.luongQuanLi;
+					st += "QuanLi" + "\t" + quanLi.heSoLuongQuanLi + "\t" + quanLi.luongQuanLi;
 				}
 				bw.write(st);
 				bw.newLine();
@@ -204,7 +204,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			for(int i = 0; i < n; i++)
 			{	
 				NhanVien nv;
-				System.out.println("Moi nhap loai nhan vien");
+				System.out.printf("Moi nhap loai nhan vien thu %d\n", i+1);
 				System.out.println("1. Quan ly");
 				System.out.println("2. Nhan vien chinh thuc");
 				System.out.println("3. Nhan vien hop dong");
@@ -336,12 +336,241 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		if(found == false)
 			System.out.println("Khong tim thay nhan vien nao phu hop voi tieu chi");
 	}
-	
+	public void thongKeNhanVienNam() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv.getGioiTinh().equalsIgnoreCase("Nam")) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong nhan vien nam: " + count);
+        }
+
+        public void thongKeNhanVienNu() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv.getGioiTinh().equalsIgnoreCase("Nu")) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong nhan vien nu: " + count);
+        }
+
+        public void thongKeLuongCaoNhat() {
+            double maxSalary = Double.NEGATIVE_INFINITY;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof NhanVienChinhThuc) {
+                    NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nv;
+                    if (nvChinhThuc.luongNhanVien > maxSalary) {
+                        maxSalary = nvChinhThuc.luongNhanVien;
+                    }
+                } else if (!nv.isDeleted() && nv instanceof NhanVienHopDong) {
+                    NhanVienHopDong nvHopDong = (NhanVienHopDong) nv;
+                    if (nvHopDong.luongHopDong > maxSalary) {
+                        maxSalary = nvHopDong.luongHopDong;
+                    }
+                }else if (!nv.isDeleted() && nv instanceof QuanLi) {
+                    QuanLi nvQuanLi = (QuanLi) nv;
+                    if (nvQuanLi.luongQuanLi > maxSalary) {
+                        maxSalary = nvQuanLi.luongQuanLi;
+                    }
+                }
+            }
+            if (maxSalary == Double.NEGATIVE_INFINITY) {
+                System.out.println("Khong co nhan vien nao co luong.");
+            } else {
+                System.out.println("Luong cao nhat: " + maxSalary + " VND");
+            }
+        }
+
+        public void thongKeLuongThapNhat() {
+            double minSalary = Double.POSITIVE_INFINITY;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof NhanVienChinhThuc) {
+                    NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nv;
+                    if (nvChinhThuc.luongNhanVien < minSalary) {
+                        minSalary = nvChinhThuc.luongNhanVien;
+                    }
+                } else if (!nv.isDeleted() && nv instanceof NhanVienHopDong) {
+                    NhanVienHopDong nvHopDong = (NhanVienHopDong) nv;
+                    if (nvHopDong.luongHopDong < minSalary) {
+                        minSalary = nvHopDong.luongHopDong;
+                    }
+                } else if (!nv.isDeleted() && nv instanceof QuanLi) {
+                    QuanLi nvQuanLi = (QuanLi) nv;
+                    if (nvQuanLi.luongQuanLi < minSalary) {
+                        minSalary = nvQuanLi.luongQuanLi;
+                    }
+                }
+            }
+            if (minSalary == Double.POSITIVE_INFINITY) {
+                System.out.println("Khong co nhan vien nao co luong.");
+            } else {
+                System.out.println("Luong thap nhat: " + minSalary + " VND");
+            }
+        }
+
+        public void thongKeNhanVienChinhThuc() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof NhanVienChinhThuc) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong nhan vien chinh thuc: " + count);
+        }
+
+        public void thongKeNhanVienHopDong() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof NhanVienHopDong) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong nhan vien hop dong: " + count);
+        }
+
+        public void thongKeThucTapSinh() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof ThucTapSinh) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong thuc tap sinh: " + count);
+        }
+
+        public void thongKeQuanLi() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted() && nv instanceof QuanLi) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("So luong quan li: " + count);
+        }
+
+        public void thongKeTongSoNhanVien() {
+            int count = 0;
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted()) {
+                    System.out.println(nv.toString());
+                    count++;
+                }
+            }
+            System.out.println("Tong so nhan vien: " + count);
+        }
+
+        public void thongKeLuongTrungBinh() {
+            double totalSalary = 0;
+            int count = 0;
+
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted()) {
+                    if (nv instanceof NhanVienChinhThuc) {
+                        totalSalary += ((NhanVienChinhThuc) nv).tinhLuong();
+                        count++;
+                    } else if (nv instanceof NhanVienHopDong) {
+                        totalSalary += ((NhanVienHopDong) nv).tinhLuong();
+                        count++;
+                    } else if (nv instanceof QuanLi) {
+                        totalSalary += ((QuanLi) nv).tinhLuong();
+                        count++;
+                    }
+                }
+            }
+
+            if (count == 0) {
+                System.out.println("Khong co nhan vien nao co luong.");
+            } else {
+                double averageSalary = totalSalary / count;
+                System.out.println("Luong trung binh: " + averageSalary + " VND");
+            }
+        }
+
+
+        public void thongKeTheoGioiTinh() {
+            int maleCount = 0;
+            int femaleCount = 0;
+
+            for (NhanVien nv : ds) {
+                if (!nv.isDeleted()) {
+                    if (nv.getGioiTinh().equalsIgnoreCase("Nam")) {
+                        maleCount++;
+                    } else if (nv.getGioiTinh().equalsIgnoreCase("Nu")) {
+                        femaleCount++;
+                    }
+                }
+            }
+
+            System.out.println("So luong nhan vien nam: " + maleCount);
+            System.out.println("So luong nhan vien nu: " + femaleCount);
+        }
 	@Override
-	public void thongKe()
-	{
-		
-	}
+        public void thongKe() {
+            System.out.println("Chon thong ke:");
+            System.out.println("1. Nhan vien nam");
+            System.out.println("2. Nhan vien nu");
+            System.out.println("3. Luong cao nhat");
+            System.out.println("4. Luong thap nhat");
+            System.out.println("5. Nhan vien chinh thuc");
+            System.out.println("6. Nhan vien hop dong");
+            System.out.println("7. Thuc tap sinh");
+            System.out.println("8. Quan ly");
+            System.out.println("9. Tong so nhan vien");
+            System.out.println("10. Luong trung binh");
+            System.out.println("11. Theo gioi tinh");
+            System.out.println("12. Thoat");
+
+            int choose = Integer.parseInt(sc.nextLine());
+
+            switch (choose) {
+                case 1:
+                    thongKeNhanVienNam();
+                    break;
+                case 2:
+                    thongKeNhanVienNu();
+                    break;
+                case 3:
+                    thongKeLuongCaoNhat();
+                    break;
+                case 4:
+                    thongKeLuongThapNhat();
+                    break;
+                case 5:
+                    thongKeNhanVienChinhThuc();
+                    break;
+                case 6:
+                    thongKeNhanVienHopDong();
+                    break;
+                case 7:
+                    thongKeThucTapSinh();
+                    break;
+                case 8:
+                    thongKeQuanLi();
+                    break;
+                case 9:
+                    thongKeTongSoNhanVien();
+                    break;
+                case 10:
+                    thongKeLuongTrungBinh();
+                    break;
+                case 11:
+                    thongKeTheoGioiTinh();
+                    break;
+                case 12:
+                    System.out.println("Thoat thong ke.");
+                    break;
+                default:
+                    System.out.println("Lua chon khong hop le.");
+            }
+        }
 	/*Thuc thi chuong trinh*/
 	public static void main (String [] args)
 	{	

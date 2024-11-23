@@ -1,7 +1,8 @@
 package QuanLyNhanSu;
 
+
 public class NhanVienChinhThuc extends NhanVien implements Luong {
-    public int capBacNhanVien;
+    public int heSoLuongNhanVien;
     public double luongNhanVien;
 
     public NhanVienChinhThuc() {};
@@ -11,24 +12,23 @@ public class NhanVienChinhThuc extends NhanVien implements Luong {
         System.out.println("=====Nhap thong tin nhan vien chinh thuc=====");
         super.nhapThongTinNhanVien();
         System.out.println("Nhap cap bac nhan vien: ");
-        capBacNhanVien = sc.nextInt();
+        heSoLuongNhanVien = sc.nextInt();
         System.out.println("Nhap luong nhan vien: ");
         luongNhanVien = sc.nextDouble();
-        
-        System.out.println("Luong: " + tinhLuong());
     }
     
     @Override
     public void xuatThongTinNhanVien() {
         System.out.println("=====Thong tin nhan vien=====");
         super.xuatThongTinNhanVien();
-        System.out.println("Cap bac nhan vien: " + capBacNhanVien);
+        System.out.println("Cap bac nhan vien: " + heSoLuongNhanVien);
         System.out.println("Luong nhan vien: " + luongNhanVien);
         System.out.println("Luong: " + tinhLuong());
     }
     
     @Override
     public double tinhLuong() {
-        return luongNhanVien * capBacNhanVien;
+        if (this.heSoLuongNhanVien <= 0) return luongNhanVien;
+        return luongNhanVien * heSoLuongNhanVien;
     }
 }

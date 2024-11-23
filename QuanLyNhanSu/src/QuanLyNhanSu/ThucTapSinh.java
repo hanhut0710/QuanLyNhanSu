@@ -2,7 +2,7 @@ package QuanLyNhanSu;
 
 public class ThucTapSinh extends NhanVien implements Luong {
     public double tienPhuCap;
-    public int capBacThucTap;
+    public int heSoLuongThucTap;
 
     public ThucTapSinh() {};
 
@@ -13,7 +13,7 @@ public class ThucTapSinh extends NhanVien implements Luong {
         System.out.println("Nhap cap bac nguoi quan li: ");
         tienPhuCap = sc.nextDouble();
         System.out.println("Nhap luong nguoi quan li: ");
-        capBacThucTap = sc.nextInt();
+        heSoLuongThucTap = sc.nextInt();
     }
 
     @Override
@@ -22,13 +22,14 @@ public class ThucTapSinh extends NhanVien implements Luong {
            
         super.xuatThongTinNhanVien();
         System.out.println("Tien phu cap: " + tienPhuCap);
-        System.out.println("Cap bac thuc tap: " + capBacThucTap);
+        System.out.println("Cap bac thuc tap: " + heSoLuongThucTap);
         
          System.out.println("Luong: "+tinhLuong());
     }
 
     @Override
     public double tinhLuong() {
-        return tienPhuCap * capBacThucTap;
+        if (this.heSoLuongThucTap <= 0) return this.tienPhuCap;
+        return this.tienPhuCap * this.heSoLuongThucTap;
     }
 }

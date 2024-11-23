@@ -1,7 +1,7 @@
 package QuanLyNhanSu;
 
 public class QuanLi extends NhanVien implements Luong {
-    public int capBacQuanLi;
+    public int heSoLuongQuanLi;
     public double luongQuanLi;
 
     public QuanLi() {}
@@ -11,7 +11,7 @@ public class QuanLi extends NhanVien implements Luong {
         System.out.println("=====Nhap thong tin quan li=====");
         super.nhapThongTinNhanVien(); 
         System.out.print("Nhap cap bac nguoi quan li: ");
-        capBacQuanLi = sc.nextInt();
+        heSoLuongQuanLi = sc.nextInt();
         sc.nextLine(); 
         System.out.print("Nhap luong nguoi quan li: ");
         luongQuanLi = sc.nextDouble();
@@ -22,7 +22,7 @@ public class QuanLi extends NhanVien implements Luong {
     public void xuatThongTinNhanVien() {
         System.out.println("=====Thong tin quan li=====");
         super.xuatThongTinNhanVien(); 
-        System.out.println("Cap bac quan li: " + capBacQuanLi);
+        System.out.println("Cap bac quan li: " + heSoLuongQuanLi);
         System.out.println("Luong quan li: " + luongQuanLi);
         
         System.out.println("Luong: " + tinhLuong());
@@ -30,6 +30,9 @@ public class QuanLi extends NhanVien implements Luong {
 
     @Override
     public double tinhLuong() {
-        return luongQuanLi * capBacQuanLi;
+        if (heSoLuongQuanLi <= 0) {
+            return luongQuanLi; 
+        }
+        return luongQuanLi * heSoLuongQuanLi;
     }
 }
