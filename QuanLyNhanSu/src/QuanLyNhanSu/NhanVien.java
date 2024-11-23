@@ -1,4 +1,4 @@
-package QLNhanSu;
+package QuanLyNhanSu;
 
 import java.util.Date;
 import java.util.Scanner;
