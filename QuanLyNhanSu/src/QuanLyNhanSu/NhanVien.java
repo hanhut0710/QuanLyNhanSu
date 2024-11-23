@@ -33,7 +33,7 @@ public class NhanVien {
 	@Override
 	public String toString() {
 		return "Ma nhan vien: " + maNhanVien + ", Ho ten: " + hoTen + ", Gioi tinh: " + gioiTinh + ", Ngay sinh: "
-				+ ngaySinh + ", So dien thoai: " + soDienThoai;
+				+ ngaySinh.format(formatter) + ", So dien thoai: " + soDienThoai;
 	}
 	
 	public void xuatThongTinNhanVien()
