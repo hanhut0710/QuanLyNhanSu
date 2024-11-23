@@ -5,12 +5,15 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
 public class DanhSachNhanVien implements QuanLiDanhSach{
 	NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
+	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	
 	static void showMenu()
 	{	
 		System.out.println("QUAN LY NHAN VIEN");
@@ -313,21 +316,39 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		String tenNhanVienTimKiem = sc.nextLine().trim();
 		System.out.println("Moi nhap so dien thoai (de trong neu khong tim theo sdt)");
 		String soDienThoaiTimKiem = sc.nextLine().trim();
+		System.out.println("Moi nhap gioi tinh (Nam/Nu, de trong neu khong tim theo gioi tinh)");
+		String gioiTinhTimKiem = sc.nextLine().trim().toLowerCase();
+		System.out.println("Moi nhap ngay sinh (dang dd/MM/yyyy, de trong neu khong tim theo ngay sinh)");
+		String ngaySinhTimKiem = sc.nextLine().trim();
 		
-		if(maNhanVienTimKiem.isEmpty() && tenNhanVienTimKiem.isEmpty() && soDienThoaiTimKiem.isEmpty())
+		
+		if(maNhanVienTimKiem.isEmpty() && tenNhanVienTimKiem.isEmpty() && soDienThoaiTimKiem.isEmpty() &&
+				gioiTinhTimKiem.isEmpty() && ngaySinhTimKiem.isEmpty())
 		{
 			System.out.println("Vui long nhap it nhat 1 thong tin tim kiem");
 			return;
 		}
 		boolean found= false;
+		LocalDate ngaySinhNhap = null;
+		try 
+		{
+			if(ngaySinhTimKiem.isEmpty() == false)
+				ngaySinhNhap = LocalDate.parse(ngaySinhTimKiem, formatter);
+		} catch(DateTimeParseException e)
+		{
+			System.out.println("Dinh dang khong hop le");
+			return;
+		}
 		for(NhanVien nv : ds)
 		{
 			boolean checkedMa = maNhanVienTimKiem.isEmpty() || nv.getMaNhanVien().equalsIgnoreCase(maNhanVienTimKiem);
 			boolean checkedTen = tenNhanVienTimKiem.isEmpty() || nv.getHoTen().toLowerCase().contains(tenNhanVienTimKiem.toLowerCase());
 			boolean checkedSDT = soDienThoaiTimKiem.isEmpty() || nv.getSoDienThoai().equalsIgnoreCase(soDienThoaiTimKiem);
+			boolean checkedGioiTinh = gioiTinhTimKiem.isEmpty() || nv.getGioiTinh().toLowerCase().equals(gioiTinhTimKiem);
+			boolean checkedNgaySinh = ngaySinhTimKiem.isEmpty() || nv.getNgaySinh().equals(ngaySinhNhap);
 			
 			//Nếu có bất kỳ tiêu chí nào khớp và QUAN TRỌNG: nhân viên chưa bị xóa
-			if((checkedMa && checkedTen && checkedSDT) && nv.isDeleted() == false)
+			if((checkedMa && checkedTen && checkedSDT && checkedGioiTinh && checkedNgaySinh) && nv.isDeleted() == false)
 			{
 				nv.xuatThongTinNhanVien();
 				found = true;
