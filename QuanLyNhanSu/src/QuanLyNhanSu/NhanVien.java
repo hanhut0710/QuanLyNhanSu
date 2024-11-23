@@ -1,23 +1,26 @@
 package QuanLyNhanSu;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class NhanVien {
 	protected String maNhanVien;
 	protected String hoTen;
 	protected String gioiTinh;
-	protected String ngaySinh;
+	protected LocalDate ngaySinh;
 	protected String soDienThoai;
 	protected boolean isDeleted;
 	
 	static Scanner sc = new Scanner(System.in);
+	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public NhanVien () {
 		this.isDeleted = false;
 	}
 
-	public NhanVien(String maNhanVien, String hoTen, String gioiTinh, String ngaySinh, String soDienThoai, boolean isDeleted) {
+	public NhanVien(String maNhanVien, String hoTen, String gioiTinh, LocalDate ngaySinh, String soDienThoai, boolean isDeleted) {
 		this.maNhanVien = maNhanVien;
 		this.hoTen = hoTen;
 		this.gioiTinh = gioiTinh;
@@ -46,7 +49,7 @@ public class NhanVien {
 		setHoTen(sc.nextLine());
 		System.out.println("Moi nhap gioi tinh: ");
 		setGioiTinh(sc.nextLine());
-		System.out.println("Moi nhap ngay sinh: ");
+		System.out.println("Moi nhap ngay sinh (dd/MM/yyyy): ");
 		setNgaySinh(sc.nextLine());
 		System.out.println("Moi nhap so dien thoai: ");
 		setSoDienThoai(sc.nextLine());
@@ -87,12 +90,27 @@ public class NhanVien {
 		}
 	}
 
-	public String getNgaySinh() {
+	public LocalDate getNgaySinh() {
 		return ngaySinh;
 	}
 
-	public void setNgaySinh(String ngaySinh) {
-		this.ngaySinh = ngaySinh;
+	public void setNgaySinh(String ngaySinhStr) {
+		LocalDate ngaySinhNhap = null;
+		try 
+		{
+			ngaySinhNhap = LocalDate.parse(ngaySinhStr, formatter);
+			
+			if(ngaySinhNhap.isAfter(LocalDate.now()))
+			{
+				System.out.println("Khong the nhap ngay sinh la mot ngay o tuong lai. Vui long nhap lai");
+				setNgaySinh(sc.nextLine());
+			}
+			else this.ngaySinh = ngaySinhNhap;
+		} catch(DateTimeParseException e) {
+			System.out.println("Dinh dang ngay khong hop le. Vui long nhap theo dinh dang (dd/MM/yyyy)");
+			setNgaySinh(sc.nextLine());
+		}
+		
 	}
 
 	public String getSoDienThoai() {
