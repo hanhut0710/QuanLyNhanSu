@@ -198,9 +198,16 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	{	
 		while(true)
 		{
-			int n;
+			int n=0;
 			System.out.println("Moi nhap so luong nhan vien muon them: ");
-			n = Integer.parseInt(sc.nextLine());
+			
+			try {
+				n = Integer.parseInt(sc.nextLine());
+			} catch(NumberFormatException e) {
+				System.out.println("Nhap sai, vui long nhap so luong la mot con so");
+				continue; //Quay lai vong lap de bat nhap lai
+			}
+			
 			
 			int originLength = ds.length;
 			
@@ -212,7 +219,15 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				System.out.println("2. Nhan vien chinh thuc");
 				System.out.println("3. Nhan vien hop dong");
 				System.out.println("4. Thuc tap sinh");
-				int choose = Integer.parseInt(sc.nextLine());
+				int choose = 0;
+				try 
+				{
+					choose = Integer.parseInt(sc.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println("Nhap sai, vui long nhap lua chon la mot con so tu 1-4");
+					i--;
+					continue;
+				}
 				switch(choose)
 				{
 					case 1:
@@ -611,49 +626,49 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
           
         }
 	/*Thuc thi chuong trinh*/
-	public static void main (String [] args)
-	{	
-		DanhSachNhanVien dsnv = new DanhSachNhanVien();
-		
-		int choose;
-		do {
-			showMenu();
-			System.out.println("Vui long nhap thao tac");
-			choose = Integer.parseInt(sc.nextLine());
-			
-			switch(choose)
-			{
-				case 1:
-					dsnv.docFile();
-					break;
-				case 2:
-					dsnv.hienThiDanhSach();
-					break;
-				case 3:
-					dsnv.them();
-					break;
-				case 4:
-					dsnv.sua();
-					break;
-				case 5:
-					dsnv.xoa();
-					break;
-				case 6:
-					dsnv.timKiem();
-					break;
-				case 7:
-					dsnv.thongKe();
-					break;
-				case 8:
-					System.out.println("Thoat chuong trinh thanh cong!");
-					break;
-				default:
-					System.out.println("Lua chon khong hop le, vui long nhap lai");
-					break;
-			}
-		} while(choose != 8);
-	}
-	
+		public static void main(String[] args) {
+		    DanhSachNhanVien dsnv = new DanhSachNhanVien();
+		    int choose= 0;
+		    do {
+		        showMenu();
+		        System.out.println("Vui long nhap thao tac");
+		        try {
+		            choose = Integer.parseInt(sc.nextLine());
+		            switch (choose) {
+		                case 1:
+		                    dsnv.docFile();
+		                    break;
+		                case 2:
+		                    dsnv.hienThiDanhSach();
+		                    break;
+		                case 3:
+		                    dsnv.them();
+		                    break;
+		                case 4:
+		                    dsnv.sua();
+		                    break;
+		                case 5:
+		                    dsnv.xoa();
+		                    break;
+		                case 6:
+		                    dsnv.timKiem();
+		                    break;
+		                case 7:
+		                    dsnv.thongKe();
+		                    break;
+		                case 8:
+		                    System.out.println("Thoat chuong trinh thanh cong!");
+		                    break;
+		                default:
+		                    System.out.println("Lua chon khong hop le, vui long nhap lai");
+		                    break;
+		            }
+		        } catch (NumberFormatException e) {
+		            System.out.println("Thao tac khong hop le. Vui long nhap thao tac (chon 1-8)");
+		        }
+		    } while (choose != 8);
+		}
+
 	
 	
 }

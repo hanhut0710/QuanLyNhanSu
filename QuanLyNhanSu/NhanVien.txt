@@ -4,3 +4,4 @@ NV004	Nguyen Thi Tu	Nu	28/09/1998	1234567890	false	NhanVienChinhThuc	2	20000.0
 NV005	Duong Dinh An	Nam	14/05/1997	1234567890	false	NhanVienChinhThuc	2	20000.0
 NV005	Duong My Dinh	Nam	08/08/2000	1234567890	false	QuanLi	1	10000.0
 NV008	Tran Thi Buoi	Nu	09/09/2000	1234569870	false	NhanVienChinhThuc	2	20000.0
+NV007	Tran Van An	Nam	28/03/1998	1236547890	false	QuanLi	2	20000.0
