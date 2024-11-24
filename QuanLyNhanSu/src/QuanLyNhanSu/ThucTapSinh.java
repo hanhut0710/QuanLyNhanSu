@@ -10,7 +10,7 @@ public class ThucTapSinh extends NhanVien implements Luong {
     public void nhapThongTinNhanVien() {
         System.out.println("======Nhap thong tin thuc tap sinh=====");
         super.nhapThongTinNhanVien();
-        System.out.println("Nhap cap bac nguoi quan li: ");
+        System.out.println("Nhap he so luong nguoi quan li: ");
         tienPhuCap = sc.nextDouble();
         System.out.println("Nhap luong nguoi quan li: ");
         heSoLuongThucTap = sc.nextInt();
@@ -22,7 +22,7 @@ public class ThucTapSinh extends NhanVien implements Luong {
            
         super.xuatThongTinNhanVien();
         System.out.println("Tien phu cap: " + tienPhuCap);
-        System.out.println("Cap bac thuc tap: " + heSoLuongThucTap);
+        System.out.println("he so luong thuc tap: " + heSoLuongThucTap);
         
          System.out.println("Luong: "+tinhLuong());
     }

@@ -16,16 +16,16 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	
 	static void showMenu()
 	{	
-		System.out.println("QUAN LY NHAN VIEN");
-		System.out.println("1. Nhap danh sach");
-		System.out.println("2. Xuat danh sach");
-		System.out.println("3. Them nhan vien");
-		System.out.println("4. Sua thong tin nhan vien");
-		System.out.println("5. Xoa nhan vien");
-		System.out.println("6. Tim kiem nhan vien");
-		System.out.println("7. Thong ke");
-		System.out.println("8. Thoat");
-		System.out.println();
+		System.out.println("===============QUAN LY NHAN VIEN===============");
+		System.out.println("===== 1. Nhap danh sach  ");
+		System.out.println("===== 2. Xuat danh sach  ");
+		System.out.println("===== 3. Them nhan vien  ");
+		System.out.println("===== 4. Sua thong tin nhan vien ");
+		System.out.println("===== 5. Xoa nhan vien  ");
+		System.out.println("===== 6. Tim kiem nhan vien ");
+		System.out.println("===== 7. Thong ke ");
+		System.out.println("===== 8. Thoat    ");
+		System.out.println("================================================");
 	}
 	
 	@Override
@@ -547,25 +547,27 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
             System.out.println("So luong nhan vien nam: " + maleCount);
             System.out.println("So luong nhan vien nu: " + femaleCount);
         }
-	@Override
-        public void thongKe() {
-            System.out.println("Chon thong ke:");
-            System.out.println("1. Nhan vien nam");
-            System.out.println("2. Nhan vien nu");
-            System.out.println("3. Luong cao nhat");
-            System.out.println("4. Luong thap nhat");
-            System.out.println("5. Nhan vien chinh thuc");
-            System.out.println("6. Nhan vien hop dong");
-            System.out.println("7. Thuc tap sinh");
-            System.out.println("8. Quan ly");
-            System.out.println("9. Tong so nhan vien");
-            System.out.println("10. Luong trung binh");
-            System.out.println("11. Theo gioi tinh");
-            System.out.println("12. Thoat");
-
-            int choose = Integer.parseInt(sc.nextLine());
-
-            switch (choose) {
+		@Override
+		public void thongKe() {
+            int choose ; 
+            do{
+                System.out.println("==========Chon thong ke: ==========");
+                System.out.println("1. Nhan vien nam");
+                System.out.println("2. Nhan vien nu");
+                System.out.println("3. Luong cao nhat");
+                System.out.println("4. Luong thap nhat");
+                System.out.println("5. Nhan vien chinh thuc");
+                System.out.println("6. Nhan vien hop dong");
+                System.out.println("7. Thuc tap sinh");
+                System.out.println("8. Quan ly");
+                System.out.println("9. Tong so nhan vien");
+                System.out.println("10. Luong trung binh");
+                System.out.println("11. Theo gioi tinh");
+                System.out.println("12. Thoat");
+                System.out.println("===================================");
+                
+                choose = Integer.parseInt(sc.nextLine());
+                switch (choose) {
                 case 1:
                     thongKeNhanVienNam();
                     break;
@@ -605,6 +607,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
                 default:
                     System.out.println("Lua chon khong hop le.");
             }
+            }while(choose != 12);
+          
         }
 	/*Thuc thi chuong trinh*/
 	public static void main (String [] args)
