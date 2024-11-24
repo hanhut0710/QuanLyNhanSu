@@ -17,14 +17,14 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	static void showMenu()
 	{	
 		System.out.println("===============QUAN LY NHAN VIEN===============");
-		System.out.println("===== 1. Nhap danh sach  ");
-		System.out.println("===== 2. Xuat danh sach  ");
-		System.out.println("===== 3. Them nhan vien  ");
-		System.out.println("===== 4. Sua thong tin nhan vien ");
-		System.out.println("===== 5. Xoa nhan vien  ");
-		System.out.println("===== 6. Tim kiem nhan vien ");
-		System.out.println("===== 7. Thong ke ");
-		System.out.println("===== 8. Thoat    ");
+		System.out.println("1. Nhap danh sach");
+		System.out.println("2. Xuat danh sach");
+		System.out.println("3. Them nhan vien");
+		System.out.println("4. Sua thong tin nhan vien");
+		System.out.println("5. Xoa nhan vien");
+		System.out.println("6. Tim kiem nhan vien");
+		System.out.println("7. Thong ke");
+		System.out.println("8. Thoat");
 		System.out.println("================================================");
 	}
 	
