@@ -88,18 +88,20 @@ public class NhanVien {
 				hoTen = sc.nextLine();
 				continue;
 			}
-//			else if(hoTen.matches(".*\\d*."))
-//			{
-//				System.out.println("Ho ten khong duoc chua so, vui long nhap lai");
-//				hoTen = sc.nextLine();
-//				continue;
-//			}
-//			else if(!hoTen.matches("[a-zA-Z\\\\s]+"))
-//			{
-//				System.out.println("Ho ten khong duoc chua ky tu dac biet, vui long nhap lai");
-//				hoTen = sc.nextLine();
-//				continue;
-//			}
+			
+			 // Kiểm tra tên có chứa số hay ký tự đặc biệt không
+	        if (hoTen.matches(".*\\d.*")) {
+	            System.out.println("Ho ten khong duoc chua so, vui long nhap lai");
+	            hoTen = sc.nextLine();
+	            continue;
+	        }
+
+	        // Kiểm tra xem tên có chứa ký tự đặc biệt không (chỉ cho phép chữ cái và khoảng trắng)
+	        if (!hoTen.matches("[a-zA-Z\\s]+")) {
+	            System.out.println("Ho ten khong duoc chua ky tu dac biet, vui long nhap lai");
+	            hoTen = sc.nextLine();
+	            continue;
+	        }
 			String words [] = hoTen.split(" ");
 			String result ="";
 			
