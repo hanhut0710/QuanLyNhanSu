@@ -10,7 +10,7 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
 public class DanhSachNhanVien implements QuanLiDanhSach{
-	NhanVien ds [] = new NhanVien [0];
+	public NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
@@ -659,6 +659,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	/*Thuc thi chuong trinh*/
 		public static void main(String[] args) {
 		    DanhSachNhanVien dsnv = new DanhSachNhanVien();
+		    DuAn duAn = new DuAn();
 		    int choose= 0;
 		    do {
 		        showMenu();
@@ -688,6 +689,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		                    dsnv.thongKe();
 		                    break;
 		                case 8:
+		                	
 		                    System.out.println("Thoat chuong trinh thanh cong!");
 		                    break;
 		                default:

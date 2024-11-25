@@ -49,8 +49,22 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		stt++;
 	}
 	
+	public DuAn[] getDanhSachDuAn() {
+		return danhSachDuAn;
+	}
+
+	public void setDanhSachDuAn(DuAn[] danhSachDuAn) {
+		this.danhSachDuAn = danhSachDuAn;
+	}
+
+	private void header() {
+		String[] headers = {"STT","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày dự kiến kết thúc"};
+		System.out.printf("%-5s %-10s %-20s %-15s %15s \n",headers[0], headers[1], headers[2], headers[3], headers[4]);
+	}
+	
 	public void hienThiDanhSach() {
 		int soThuTu = 1;
+		header();
 		for(DuAn x : danhSachDuAn) {
 			if(!x.isTrangThaiXoa()) {
 				x.xuatThongTinDuAn(soThuTu);
@@ -350,8 +364,26 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 	}
 	@Override
 	public void thongKe() {
-		
-		
+		int maxSoLuongNhanVien = danhSachDuAn[0].getDanhSachNhanVien().ds.length;
+		int minSoluongNhanVien = danhSachDuAn[0].getDanhSachNhanVien().ds.length;
+		int max = 0, min = 0;
+		for(int i=1; i<danhSachDuAn.length; i++) {
+			if(maxSoLuongNhanVien < danhSachDuAn[i].getDanhSachNhanVien().ds.length) {
+				maxSoLuongNhanVien = danhSachDuAn[i].getDanhSachNhanVien().ds.length;
+				max = i;
+			}
+			if(minSoluongNhanVien > danhSachDuAn[i].getDanhSachNhanVien().ds.length) {
+				minSoluongNhanVien = danhSachDuAn[i].getDanhSachNhanVien().ds.length;
+
+				min = i;
+			}
+		}
+		System.out.println("==== Dự án có nhiều nhân viên tham gia nhất ====");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lương nhân viên");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s", this.danhSachDuAn[max].getMaDuAn(), this.danhSachDuAn[max].getTenDuAn(), this.danhSachDuAn[max].getNgayBatDau().getDate(), this.danhSachDuAn[max].getDuKienKetThuc().getDate(), maxSoLuongNhanVien);
+		System.out.println("==== Dự án có ít nhân viên tham gia nhất ====");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lương nhân viên");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s", this.danhSachDuAn[min].getMaDuAn(), this.danhSachDuAn[min].getTenDuAn(), this.danhSachDuAn[min].getNgayBatDau().getDate(), this.danhSachDuAn[min].getDuKienKetThuc().getDate(), minSoluongNhanVien);
 	}
 	@Override
 	public void docFile() {
@@ -476,6 +508,37 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		}
 	}
 	
+	public boolean checkNhanVien(NhanVien x) {
+		for(DuAn duAn : danhSachDuAn) {
+			for(NhanVien nhanVien : duAn.getDanhSachNhanVien().ds) {
+				if(nhanVien.equals(x))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public void themNhanVienVaoDanhSachDuAn(NhanVien x) {
+		if(checkNhanVien(x)) {
+			System.out.println("Nhân viên "+x.getMaNhanVien()+" đã làm việc cho 1 dự án, không thể thêm nữa !!!");
+			return;
+		}
+		String maDuAn;
+		do {
+			System.out.println("----Thêm nhân viên vào dự án----");
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Hãy nhập mã dự án mà bạn muốn thêm vào: ");
+			maDuAn = sc.nextLine();
+			if(checkMaDuAn(maDuAn)) {
+				System.out.println("Mã dự án không tồn tại, vui lòng nhập lại !!1");
+			}
+		} while (checkMaDuAn(maDuAn));
+		for(DuAn duAn : danhSachDuAn) {
+			if(duAn.getMaDuAn().equals(maDuAn)) {
+				duAn.themNhanVienVaoDuAn(x);
+			}
+		}
+	}
 	
 	
 }

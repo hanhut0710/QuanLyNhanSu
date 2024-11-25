@@ -1,6 +1,7 @@
 package QuanLyNhanSu;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class DuAn implements Serializable{
@@ -13,16 +14,25 @@ public class DuAn implements Serializable{
 	private Date ngayBatDau;
 	private Date duKienKetThuc;
 	private boolean trangThaiXoa; // xóa là true, false là chưa xóa
-	
-	public DuAn(String maDuAn, String tenDuAn, Date ngayBatDau, Date duKienKetThuc, boolean trangThaiXoa) {
+	private DanhSachNhanVien danhSachNhanVien = new DanhSachNhanVien();
+
+	public DuAn(String maDuAn, String tenDuAn, Date ngayBatDau, Date duKienKetThuc, boolean trangThaiXothí) {
 		this.maDuAn = maDuAn;
 		this.tenDuAn = tenDuAn;
 		this.ngayBatDau = ngayBatDau;
 		this.duKienKetThuc = duKienKetThuc;
 		this.trangThaiXoa = false;
+		this.danhSachNhanVien = new DanhSachNhanVien();
 	}
 	public DuAn() {
 		this.trangThaiXoa = false;
+		this.danhSachNhanVien = new DanhSachNhanVien();
+	}
+	
+	
+	public void themNhanVienVaoDuAn(NhanVien x) {
+		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
+		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
 	}
 	
 	
@@ -59,6 +69,7 @@ public class DuAn implements Serializable{
 		}while(!success);
 	}
 	
+	
 	public void xuatThongTinDuAn() {
 		System.out.println("----Thông tin dự án----");
 		System.out.println("Mã dự án: "+this.maDuAn);
@@ -67,11 +78,13 @@ public class DuAn implements Serializable{
 		System.out.println("Ngày dự kiến kết thúc: "+this.duKienKetThuc.getDate());
 	}
 	public void xuatThongTinDuAn(int stt) {
-		System.out.println("----Thông tin dự án số "+stt+"----");
-		System.out.println("Mã dự án: "+this.maDuAn);
-		System.out.println("Tên dự án: "+this.tenDuAn);
-		System.out.println("Ngày bắt đầu: "+this.ngayBatDau.getDate());
-		System.out.println("Ngày dự kiến kết thúc: "+this.duKienKetThuc.getDate());
+		System.out.printf("%-5d %-10s %-20s %-15s %-15s \n", stt, this.maDuAn, this.tenDuAn, this.ngayBatDau.getDate(), this.duKienKetThuc.getDate());
+	}
+	
+	public void xuatThongTinDanhSachNhanVien() {
+		for(NhanVien x : danhSachNhanVien.ds) {
+			System.out.printf("");
+		}
 	}
 	
 	public String getMaDuAn() {
@@ -133,7 +146,12 @@ public class DuAn implements Serializable{
 	}
 	
 	
-	
+	public DanhSachNhanVien getDanhSachNhanVien() {
+		return danhSachNhanVien;
+	}
+	public void setDanhSachNhanVien(DanhSachNhanVien danhSachNhanVien) {
+		this.danhSachNhanVien = danhSachNhanVien;
+	}
 	
 	
 	
