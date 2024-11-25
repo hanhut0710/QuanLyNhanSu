@@ -97,8 +97,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					else if(nv instanceof NhanVienHopDong)
 					{
 						NhanVienHopDong nvHopDong = (NhanVienHopDong) nv;
-						nvHopDong.ngayBatDau = LocalDate.parse(s[7].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-						nvHopDong.ngayKetThuc = LocalDate.parse(s[8].trim(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+						nvHopDong.ngayBatDau = LocalDate.parse(s[7].trim(), formatter);
+						nvHopDong.ngayKetThuc = LocalDate.parse(s[8].trim(), formatter);
 						nvHopDong.luongHopDong = Double.parseDouble(s[9].trim());
 					}
 					else if(nv instanceof ThucTapSinh)
@@ -144,7 +144,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				st += ds[i].getMaNhanVien() + "\t";
 				st += ds[i].getHoTen() + "\t";
 				st += ds[i].getGioiTinh() + "\t";
-				st += ds[i].getNgaySinh() + "\t";
+				st += ds[i].getNgaySinh().format(formatter) + "\t";
 				st += ds[i].getSoDienThoai() + "\t";
 				st += ds[i].isDeleted() + "\t";
 				
@@ -156,8 +156,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				else if(ds[i] instanceof NhanVienHopDong)
 				{
 					NhanVienHopDong nvHopDong = (NhanVienHopDong) ds[i];
-					st += "NhanVienHopDong" + "\t" + nvHopDong.ngayBatDau.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\t"
-							+ nvHopDong.ngayKetThuc.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "\t" + nvHopDong.luongHopDong;
+					st += "NhanVienHopDong" + "\t" + nvHopDong.ngayBatDau.format(formatter) + "\t"
+							+ nvHopDong.ngayKetThuc.format(formatter) + "\t" + nvHopDong.luongHopDong;
 				}
 				else if(ds[i] instanceof ThucTapSinh)
 				{
@@ -312,7 +312,10 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			{
 				nvCanXoa.setDeleted(true);
 				if(nvCanXoa.isDeleted() == true)
+				{
 					System.out.printf("Xoa thanh cong nhan vien co ma %s \n", maNhanVienCanXoa);
+					ghiFile();
+				}
 				else System.out.println("Loi xay ra, xoa khong thanh cong");
 			}
 			else System.out.println("Huy xoa nhan vien");
@@ -373,7 +376,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			boolean checkedMa = maNhanVienTimKiem.isEmpty() || nv.getMaNhanVien().equalsIgnoreCase(maNhanVienTimKiem);
 			boolean checkedTen = tenNhanVienTimKiem.isEmpty() || nv.getHoTen().toLowerCase().contains(tenNhanVienTimKiem.toLowerCase());
 			boolean checkedSDT = soDienThoaiTimKiem.isEmpty() || nv.getSoDienThoai().equalsIgnoreCase(soDienThoaiTimKiem);
-			boolean checkedGioiTinh = gioiTinhTimKiem.isEmpty() || nv.getGioiTinh().toLowerCase().equals(gioiTinhTimKiem);
+			boolean checkedGioiTinh = gioiTinhTimKiem.isEmpty() || nv.getGioiTinh().equalsIgnoreCase(gioiTinhTimKiem);
 			boolean checkedNgaySinh = ngaySinhTimKiem.isEmpty() || nv.getNgaySinh().equals(ngaySinhNhap);
 			
 			//Nếu có bất kỳ tiêu chí nào khớp và QUAN TRỌNG: nhân viên chưa bị xóa

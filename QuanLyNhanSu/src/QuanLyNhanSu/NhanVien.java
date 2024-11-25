@@ -60,7 +60,19 @@ public class NhanVien {
 	}
 
 	public void setMaNhanVien(String maNhanVien) {
-		this.maNhanVien = maNhanVien;
+		while(true)
+		{
+			if(maNhanVien.matches("[A-Z]{2}\\d{3,}"))
+			{
+				this.maNhanVien = maNhanVien;
+				break;
+			}
+			else
+			{
+				System.out.println("Ma nhan vien bao gom 2 ki tu in hoa va 3 chu so. VD 'XX001'.");
+				maNhanVien = sc.nextLine();
+			}
+		}
 	}
 
 	public String getHoTen() {
@@ -68,7 +80,35 @@ public class NhanVien {
 	}
 
 	public void setHoTen(String hoTen) {
-		this.hoTen = hoTen;
+		while(true)
+		{
+			if(hoTen.isEmpty() == true)
+			{
+				System.out.println("Ho ten khong duoc de trong, vui long nhap lai");
+				hoTen = sc.nextLine();
+				continue;
+			}
+//			else if(hoTen.matches(".*\\d*."))
+//			{
+//				System.out.println("Ho ten khong duoc chua so, vui long nhap lai");
+//				hoTen = sc.nextLine();
+//				continue;
+//			}
+//			else if(!hoTen.matches("[a-zA-Z\\\\s]+"))
+//			{
+//				System.out.println("Ho ten khong duoc chua ky tu dac biet, vui long nhap lai");
+//				hoTen = sc.nextLine();
+//				continue;
+//			}
+			String words [] = hoTen.split(" ");
+			String result ="";
+			
+			for(String word : words)
+				if(word.isEmpty() == false)
+					result += word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase()+ " ";
+			this.hoTen = result.trim();
+			break; //break neu hop le
+		}
 	}
 
 	public String getGioiTinh() {
@@ -120,15 +160,15 @@ public class NhanVien {
 	public void setSoDienThoai(String soDienThoai) {
 		while(true)
 		{
-			if(soDienThoai.length() != 10)
-			{
-				System.out.println("Vui long nhap so dien thoai gom 10 chu so");
-				soDienThoai = sc.nextLine();
-			}
-			else 
+			if(soDienThoai.length() == 10	&& soDienThoai.matches("[0-9]+"))
 			{
 				this.soDienThoai = soDienThoai;
 				break;
+			}
+			else 
+			{	
+				System.out.println("Vui long nhap so dien thoai gom 10 chu so");
+				soDienThoai = sc.nextLine();
 			}
 		}
 	}
