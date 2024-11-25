@@ -60,6 +60,11 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					boolean isDeleted = Boolean.parseBoolean(s[5].trim());
 					String loaiNhanVien = s[6].trim();
 					
+					if(kiemTraMaNhanVien(maNhanVien))
+					{
+						System.out.printf("Ma nhan vien %s da ton tai. Bo qua nhan vien \n", maNhanVien);
+						continue;
+					}
 					NhanVien nv = null;
 					switch(loaiNhanVien)
 					{
@@ -180,6 +185,16 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 	}
 	
+	public boolean kiemTraMaNhanVien(String maNhanVien) 
+	{
+	    for (NhanVien nv : ds) {
+	        if (nv.getMaNhanVien().equals(maNhanVien)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
 	@Override
 	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
@@ -192,6 +207,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			
 		}
 	}
+	
 	
 	@Override
 	public void them()
@@ -243,11 +259,23 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 						nv = new ThucTapSinh();
 						break;
 				}
-				
+
 				nv.nhapThongTinNhanVien();
+				
+				while(true)
+				{
+					if(kiemTraMaNhanVien(nv.getMaNhanVien()))
+					{
+						System.out.println("Ma nhan vien da ton tai. Vui long nhap lai");
+						nv.nhapThongTinNhanVien();
+					}
+					else break;
+				}
+				
 				ds = Arrays.copyOf(ds, ds.length+1);
 				ds[ds.length-1]= nv;
 			} 
+			
 			if(ds.length > originLength)
 			{
 				System.out.printf("Them thanh cong %d nhan vien \n", ds.length-originLength);
