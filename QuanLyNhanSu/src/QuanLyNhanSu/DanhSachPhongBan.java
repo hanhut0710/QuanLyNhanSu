@@ -378,9 +378,11 @@ public class DanhSachPhongBan {
 
 	// run
 //	public static void main(String[] args) {
+////			DanhSachPhongBan danhSachPhongBan=new DanhSachPhongBan();
+//		
 //		DanhSachPhongBan danhSachPhongBan = FileManager.docFile();
 //
-//		Scanner sc = new Scanner(System.in);
+////		Scanner sc = new Scanner(System.in);
 //		int luaChon;
 //		
 //		do {
@@ -391,6 +393,8 @@ public class DanhSachPhongBan {
 //	            System.out.println("4. Sửa thông tin phòng ban");
 //	            System.out.println("5. Hiển thị thông tin phòng ban");	 
 //	            System.out.println("6. Phục hồi phòng ban");	
+//	            System.out.println("7. Thống kê phòng ban");
+//	            System.out.println("8. Tìm kiếm nhân viên");
 //	            System.out.println("0. Thoát và lưu file");
 //	            System.out.print("Nhập lựa chọn: ");
 //	            luaChon = sc.nextInt();
@@ -437,6 +441,12 @@ public class DanhSachPhongBan {
 //	            case 6:
 //	            	danhSachPhongBan.phucHoiPhongBan();
 //	            	break;
+//	            case 7:
+//	            	danhSachPhongBan.thongKePhongBan();
+//	            	break;
+//	            case 8:
+//	            	danhSachPhongBan.timKiemNV();
+//	            	break;
 //	            case 0:
 //	            	FileManager.ghiFile(danhSachPhongBan);
 //	            	System.out.println("========================================");
@@ -447,7 +457,5 @@ public class DanhSachPhongBan {
 //	            	System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại!!!");
 //	            }
 //	            
-//		}while(luaChon!=0);
-//	}
-//	
+//		}while(luaChon!=0);	
 }
