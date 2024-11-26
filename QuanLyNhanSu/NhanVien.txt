@@ -1,4 +1,4 @@
-NV001	Nguyen Van A	Nam	28/02/2000	1234567890	false	QuanLi	3	7000000.0
+NV001	Trinh Tran Phuong Tuan	Nam	28/02/2000	1234567890	false	QuanLi	2	7000000.0
 NV002	Tran The Teo	Nu	24/03/1980	1234568891	false	NhanVienHopDong	01/01/2023	31/12/2023	3000000.0
 NV004	Nguyen Cam Tu	Nu	28/06/2000	1234567890	false	NhanVienChinhThuc	2	20000.0
 NV005	Huynh Diem My	Nu	19/09/1999	1234567890	false	NhanVienChinhThuc	2	20000.0

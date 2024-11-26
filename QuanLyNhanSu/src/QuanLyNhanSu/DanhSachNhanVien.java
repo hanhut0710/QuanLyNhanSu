@@ -36,7 +36,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	 	Bước 3. Tùy vào trường loaiNhanVien mà khởi tạo đối tượng tương ứng
 	 	Bước 4. Gọi các hàm set để cập nhật thông tin 7 trường cơ bản
 	 	Bước 5. Kiểm tra nv có là instance của các lớp ? => Set các trường tương ứng
-	 	Bước 6. Thêm nv vào mảng
+	 	Bước 6. Thêm nv vào mảng -> xuat tb nhap thanh cong
 	 	*/
 		try 
 		{
@@ -203,6 +203,16 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	    return false;
 	}
 	
+	public boolean kiemTraSoDienThoai(String soDienThoai) 
+	{
+	    for (NhanVien nv : ds) {
+	        if (nv.getMaNhanVien().equals(soDienThoai)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
 	@Override
 	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
@@ -272,13 +282,23 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				nv.nhapThongTinNhanVien();
 				
 				while(true)
-				{
+				{	
+					boolean checkedMaNhanVien = true;
+					boolean checkedSoDienThoai = true;
 					if(kiemTraMaNhanVien(nv.getMaNhanVien()))
 					{
 						System.out.println("Ma nhan vien da ton tai. Vui long nhap lai");
-						nv.nhapThongTinNhanVien();
+						nv.setMaNhanVien(sc.nextLine());
+						checkedMaNhanVien = false;
 					}
-					else break;
+					if(kiemTraSoDienThoai(nv.getSoDienThoai()))
+					{
+						System.out.println("So dien thoai da ton tai. Vui long nhap lai");
+						nv.nhapThongTinNhanVien();
+						checkedSoDienThoai = false;
+					}
+					if(checkedMaNhanVien && checkedSoDienThoai)
+						break;
 				}
 				
 				ds = Arrays.copyOf(ds, ds.length+1);
@@ -316,10 +336,132 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		if(nvCanSua != null)
 		{
 			System.out.println("Nhan vien can sua: " +nvCanSua.maNhanVien);
-			/*Nhập lại 1 thông tin hay nhập lại hết????*/
-			System.out.println("Moi nhap thong tin cho nhan vien");
-			nvCanSua.nhapThongTinNhanVien();
+			System.out.println("Moi nhap thong tin muon sua");
+			System.out.println("0. Sua toan bo thong tin");
+			System.out.println("1. Sua ma nhan vien");
+			System.out.println("2. Sua ho ten");
+			System.out.println("3. Sua gioi tinh");
+			System.out.println("4. Sua ngay sinh");
+			System.out.println("5. Sua so dien thoai");
 			
+			if(nvCanSua instanceof NhanVienChinhThuc)
+			{
+				System.out.println("6. Sua he so luong");
+				System.out.println("7. Sua luong");
+			} 
+			else if(nvCanSua instanceof NhanVienHopDong)
+			{
+				System.out.println("6. Sua ngay bat dau hop dong");
+				System.out.println("7. Sua ngay ket thuc hop dong");
+				System.out.println("8. Sua luong hop dong");
+			}
+			else if(nvCanSua instanceof ThucTapSinh)
+			{
+				System.out.println("6. Sua he so luong thuc ta");
+				System.out.println("7. Sua tien phu cap");
+			}
+			else if(nvCanSua instanceof QuanLi)
+			{
+				System.out.println("6. Sua he so luong");
+				System.out.println("7. Sua luong");
+			}
+			System.out.println("Vui long nhap lua chon");
+			
+			
+			int choose = Integer.parseInt(sc.nextLine());
+			switch(choose)
+			{
+				case 0:
+					System.out.println("Nhap lai toan bo thong tin nhan vien");
+					nvCanSua.nhapThongTinNhanVien();
+					break;
+				case 1:
+					System.out.println("Moi nhap ma nhan vien moi: ");
+					nvCanSua.setMaNhanVien(sc.nextLine());
+					break;
+				case 2:
+					System.out.println("Moi nhap ho ten moi: ");
+					nvCanSua.setHoTen(sc.nextLine());
+					break;
+				case 3:
+					System.out.println("Moi nhap gioi tinh(Nam/Nu) moi: ");
+					nvCanSua.setGioiTinh(sc.nextLine());
+					break;
+				case 4:
+					System.out.println("Moi nhap ngay sinh moi (dd/MM/yyyy): ");
+					nvCanSua.setNgaySinh(sc.nextLine());
+					break;
+				case 5:
+					System.out.println("Moi nhap so dien thoai moi: ");
+					nvCanSua.setSoDienThoai(sc.nextLine());
+					break;
+				
+				//Cac truong hop khac tuy thuoc vao loai nhan vien
+				case 6:
+					if(nvCanSua instanceof NhanVienChinhThuc)
+					{
+						NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nvCanSua;
+						System.out.println("Moi nhap he so luong moi");
+						nvChinhThuc.heSoLuongNhanVien = Integer.parseInt(sc.nextLine());
+					}
+					else if(nvCanSua instanceof NhanVienHopDong)
+					{
+						NhanVienHopDong nvHopDong = (NhanVienHopDong) nvCanSua;
+						System.out.println("Moi nhap ngay bat dau moi");
+						String ngayBatDau = sc.nextLine();
+						nvHopDong.ngayBatDau = LocalDate.parse(ngayBatDau, formatter);
+					}
+					else if(nvCanSua instanceof ThucTapSinh)
+					{
+						ThucTapSinh thucTapSinh = (ThucTapSinh) nvCanSua;
+						System.out.println("Moi nhap he so luong moi");
+						thucTapSinh.heSoLuongThucTap = Integer.parseInt(sc.nextLine());
+					}
+					else if(nvCanSua instanceof QuanLi)
+					{
+						QuanLi quanLi = (QuanLi) nvCanSua;
+						System.out.println("Moi nhap he so luong moi");
+						quanLi.heSoLuongQuanLi = Integer.parseInt(sc.nextLine());
+					}
+					break;
+				case 7:
+					if(nvCanSua instanceof NhanVienChinhThuc)
+					{
+						NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nvCanSua;
+						System.out.println("Moi nhap luong moi");
+						nvChinhThuc.luongNhanVien = Double.parseDouble(sc.nextLine());
+					}
+					else if(nvCanSua instanceof NhanVienHopDong)
+					{
+						NhanVienHopDong nvHopDong = (NhanVienHopDong) nvCanSua;
+						System.out.println("Moi nhap ngay ket thuc moi");
+						String ngayKetThuc = sc.nextLine();
+						nvHopDong.ngayKetThuc = LocalDate.parse(ngayKetThuc, formatter);
+					}
+					else if(nvCanSua instanceof ThucTapSinh)
+					{
+						ThucTapSinh thucTapSinh = (ThucTapSinh) nvCanSua;
+						System.out.println("Moi tien phu cap moi");
+						thucTapSinh.tienPhuCap = Double.parseDouble(sc.nextLine());
+					}
+					else if(nvCanSua instanceof QuanLi)
+					{
+						QuanLi quanLi = (QuanLi) nvCanSua;
+						System.out.println("Moi nhap luong moi");
+						quanLi.luongQuanLi= Double.parseDouble(sc.nextLine());
+					}
+					break;
+				case 8:
+					if(nvCanSua instanceof NhanVienHopDong) {
+	                    NhanVienHopDong nvHopDong = (NhanVienHopDong) nvCanSua;
+	                    System.out.println("Moi nhap luong hop dong moi: ");
+	                    nvHopDong.luongHopDong = sc.nextDouble();
+	                }
+	                break;
+	            default:
+	            	System.out.println("Lua chon khong hop le, vui long nhap lai");
+	            	return;
+			}
 			ghiFile();
 		}
 		else System.out.printf("Khong tim nhan nhan vien voi ma %s \n", maNhanVienCanSua);
