@@ -5,3 +5,4 @@ NV005	Huynh Diem My	Nu	19/09/1999	1234567890	false	NhanVienChinhThuc	2	20000.0
 NV013	Nguyen Thi B	Nam	11/01/2000	1234567890	false	QuanLi	3	30000.0
 NV014	Nguyen Van An	Nu	30/03/2000	3216547890	false	NhanVienChinhThuc	2	20000.0
 NV009	Nguyen Phuong An	Nu	28/01/2000	3216549870	false	QuanLi	2	20000.0
+NV018	Anh Nhut	Nam	12/12/1212	0926213561	false	QuanLi	3	5000000.0

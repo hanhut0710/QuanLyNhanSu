@@ -29,10 +29,21 @@ public class DuAn implements Serializable{
 		this.danhSachNhanVien = new DanhSachNhanVien();
 	}
 	
+	public void themNhanVienVaoDuAn(String maNhanVien) {
+		NhanVien x = new NhanVien();
+		x = danhSachNhanVien.check(maNhanVien);
+		System.out.println(this.danhSachNhanVien.ds.length);
+		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
+		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
+		System.out.println(this.danhSachNhanVien.ds.length);
+		System.out.println(x);
+		System.out.println("Thêm nhân viên thành công !!!");
+	}
 	
 	public void themNhanVienVaoDuAn(NhanVien x) {
 		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
 		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
+		System.out.println("Thêm nhân viên thành công !!!");
 	}
 	
 	
@@ -82,8 +93,21 @@ public class DuAn implements Serializable{
 	}
 	
 	public void xuatThongTinDanhSachNhanVien() {
+		System.out.println("======== Danh sách nhân viên của dự án "+this.maDuAn+" ==========");
+		System.out.printf("%-10s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
 		for(NhanVien x : danhSachNhanVien.ds) {
-			System.out.printf("");
+			if(x instanceof NhanVienHopDong) {
+				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
+			}
+			else if(x instanceof NhanVienChinhThuc) {
+				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
+			}
+			else if(x instanceof QuanLi) {
+				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
+			}
+			else if(x instanceof ThucTapSinh) {
+				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
+			}
 		}
 	}
 	
@@ -153,6 +177,13 @@ public class DuAn implements Serializable{
 		this.danhSachNhanVien = danhSachNhanVien;
 	}
 	
+	public boolean checkNhanVien(NhanVien x) {
+		for(NhanVien nhanVien : danhSachNhanVien.ds) {
+			if(nhanVien.equals(x))
+				return true;
+		}
+		return false;
+	}
 	
 	
 }

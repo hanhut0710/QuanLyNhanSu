@@ -120,7 +120,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
-					System.out.println("Nhap thanh cong nhan vien " +hoTen);
+					System.out.println("aaaaaaaaa"+ds.length+"aaaaaaaaaa"+ds[ds.length - 1]);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);
@@ -128,7 +128,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				}
 				
 			}
-			
+			System.out.println(ds.length);
 			br.close();
 			fr.close();
 		} catch(Exception e) {	
@@ -136,6 +136,13 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 	}
 	
+	public NhanVien check(String maNhanVien) {
+		for(NhanVien x : ds) {
+			if(maNhanVien.equals(x.getMaNhanVien()))
+				return x;
+		}
+		return null;
+	}
 	@Override
 	public void ghiFile()
 	{
@@ -187,6 +194,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	
 	public boolean kiemTraMaNhanVien(String maNhanVien) 
 	{
+		System.out.println(ds.length);
 	    for (NhanVien nv : ds) {
 	        if (nv.getMaNhanVien().equals(maNhanVien)) {
 	            return true;
@@ -198,6 +206,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	@Override
 	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
+		System.out.println(ds.length);
 		for(int i=0; i < ds.length; i++)
 		{	
 			if(ds[i].isDeleted() == false)

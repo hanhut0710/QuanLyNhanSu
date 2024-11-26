@@ -10,8 +10,8 @@ public class Display {
 		DanhSachNhanVien danhSachNhanVien = new DanhSachNhanVien();
 		DanhSachDuAn danhSachDuAn = new DanhSachDuAn();
 		DanhSachPhongBan danhSachPhongBan = new DanhSachPhongBan();
-		danhSachDuAn.docFile();
 		danhSachNhanVien.docFile();
+		danhSachDuAn.docFile();
 		while(true) {
 			System.out.println("======= Hệ thống quản lí nhân sự ======");
 			System.out.println("1. Nhân sự ");
@@ -45,8 +45,9 @@ public class Display {
 					System.out.println("5. Tìm kiếm dự án");
 					System.out.println("6. Thống kê dự án");
 					System.out.println("7. Thêm nhân viên vào dự án");
-					System.out.println("8. Lưu dự án hiện có");
-					System.out.println("7. Dữ liệu dự án");
+					System.out.println("8. Xuất danh sách nhân viên của từng dự án");
+					System.out.println("9. Lưu dự án hiện có");
+					System.out.println("10. Dữ liệu dự án");
 					System.out.println("0. Thoát");
 					System.out.print("Hãy nhập tab tab muốn vào: ");
 					luaChon = sc.nextInt();
@@ -55,6 +56,7 @@ public class Display {
 					else if(luaChon==2)
 						danhSachDuAn.sua();
 					else if(luaChon==3)
+						
 						danhSachDuAn.xoa();
 					else if(luaChon==4)
 						danhSachDuAn.hienThiDanhSach();
@@ -68,22 +70,26 @@ public class Display {
 						System.out.println("======= Thêm nhân viên vào dự án =======");
 						System.out.print("Nhập mã nhân viên muốn thêm vào dự án: ");
 						sc.nextLine();
-						String maDuAn = sc.nextLine();
+						String maNhanVien = sc.nextLine();
+						System.out.println(danhSachNhanVien.ds[0]);
 						for(NhanVien x : danhSachNhanVien.ds) {
-							if(x.getMaNhanVien().equals(maDuAn))
+							if(x.getMaNhanVien().equals(maNhanVien))
 								danhSachDuAn.themNhanVienVaoDanhSachDuAn(x);
 						}
 						
 					}
 					else if(luaChon == 8)
-						danhSachDuAn.ghiFile();
+						danhSachDuAn.xuatNhanVienCuaCacDuAn();
 					else if(luaChon == 9)
+						danhSachDuAn.ghiFile();
+					else if(luaChon == 10)
 						danhSachDuAn.history();
 					else if(luaChon == 0)
 						break;
 					
 				}
 			}
+			
 		}
 	}
 }
