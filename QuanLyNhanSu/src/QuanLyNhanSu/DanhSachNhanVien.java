@@ -37,7 +37,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	 	Bước 3. Tùy vào trường loaiNhanVien mà khởi tạo đối tượng tương ứng
 	 	Bước 4. Gọi các hàm set để cập nhật thông tin 7 trường cơ bản
 	 	Bước 5. Kiểm tra nv có là instance của các lớp ? => Set các trường tương ứng
-	 	Bước 6. Thêm nv vào mảng -> xuat tb nhap thanh cong
+	 	Bước 6. Thêm nv vào mảng
 	 	*/
 		try 
 		{
@@ -121,6 +121,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
+					System.out.println("Nhap thanh cong nhan vien " +hoTen);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);
