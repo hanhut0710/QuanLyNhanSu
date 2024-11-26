@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
 public class DanhSachNhanVien implements QuanLiDanhSach{
+	public static NhanVien[] dsnvct=new NhanVien[0];  // su ly phong ban
 	public NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -838,6 +839,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		                    dsnv.thongKe();
 		                    break;
 		                case 8:
+		                	DanhSachNhanVien.dsnvct = dsnv.ds;
 		                	System.out.println("mã nhân viên: ");
 		                	System.out.println(dsnv.check(sc.nextLine()));
 		                    System.out.println("Thoat chuong trinh thanh cong!");
@@ -850,8 +852,11 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		            System.out.println("Thao tac khong hop le. Vui long nhap thao tac (chon 1-8)");
 		        }
 		    } while (choose != 8);
+		    
+		    		 
 		}
 
+		
 		@Override
 		public void docFile(DanhSachNhanVien danhSachNhanVien) {
 			// TODO Auto-generated method stub

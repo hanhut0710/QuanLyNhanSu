@@ -153,7 +153,7 @@ public class DanhSachPhongBan {
 							boolean Exist = false;
 							String maNV;
 							do {
-								 Valid = false;
+								Valid = false;
 								System.out.println("Nhập mã nhân viên thêm vào phòng : ");
 								maNV = sc.nextLine();
 								for (NhanVien nv : DanhSachNhanVien.dsnvct) {
@@ -176,27 +176,28 @@ public class DanhSachPhongBan {
 									System.out.println("Nhân viên bị trùng (đã ở trong phòng)");
 							} while (!Valid);
 							break;
-						
+
 						case 5:
 							sc.nextLine();
 							boolean kiemTra = false;
 							do {
 								System.out.println("Nhập mã nhân viên muốn xóa : ");
 								String maNhanVien = sc.nextLine();
-								
+
 								if (checkMaNV2(maNhanVien, phongBan) != -1) {
-									for(int i = checkMaNV2(maNhanVien, phongBan);i<phongBan.danhSachNhanVien.length-1;i++)
-										phongBan.danhSachNhanVien[i]=phongBan.danhSachNhanVien[i+1];
-									phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,phongBan.danhSachNhanVien.length - 1);
-									kiemTra=true;
+									for (int i = checkMaNV2(maNhanVien, phongBan); i < phongBan.danhSachNhanVien.length
+											- 1; i++)
+										phongBan.danhSachNhanVien[i] = phongBan.danhSachNhanVien[i + 1];
+									phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,
+											phongBan.danhSachNhanVien.length - 1);
+									kiemTra = true;
 									System.out.println("Đã xóa nhân viên thành công !!!");
-								}
-								else {
+								} else {
 									System.out.println("Không tìm thấy nhân viên này");
 									break;
-								
+
 								}
-								
+
 //								if (!kiemTra)
 //									System.out.println("Không tìm nhân viên trong danh sách !!!");
 							} while (!kiemTra);
@@ -303,8 +304,7 @@ public class DanhSachPhongBan {
 	public void sapXepPhongBan() {
 		for (int i = 0; i < danhSachPhongBan.length - 1; i++)
 			for (int j = i + 1; j < danhSachPhongBan.length; j++)
-				if (danhSachPhongBan[i].getMaPhongBan().compareTo(danhSachPhongBan[j].getMaPhongBan()) > 0) // doi neu i
-																											// > j
+				if (danhSachPhongBan[i].getMaPhongBan().compareToIgnoreCase(danhSachPhongBan[j].getMaPhongBan()) > 0) // doi neu i > j																													
 				{
 					PhongBan temp = danhSachPhongBan[i];
 					danhSachPhongBan[i] = danhSachPhongBan[j];
@@ -331,7 +331,7 @@ public class DanhSachPhongBan {
 		}
 		System.out.println("Phòng ban có số lượng nhân viên nhiều nhất (" + maxSoNhanVien + " nhân viên):");
 		for (PhongBan pb : danhSachPhongBan) {
-			if( pb.danhSachNhanVien.length == maxSoNhanVien) {
+			if (pb.danhSachNhanVien.length == maxSoNhanVien) {
 				System.out.println("Mã phòng ban: " + pb.getMaPhongBan() + ", Tên phòng ban: " + pb.getTenPhongBan());
 			}
 		}
@@ -341,24 +341,67 @@ public class DanhSachPhongBan {
 				System.out.println("Mã phòng ban: " + pb.getMaPhongBan() + ", Tên phòng ban: " + pb.getTenPhongBan());
 			}
 		}
+		boolean it = false;
+		boolean kt = false;
+		boolean tc = false;
+		boolean td = false;
+
+		for (PhongBan pb : danhSachPhongBan) {
+			if (pb instanceof PhongIT) {
+				if (!it) {
+					System.out.println("---------Danh sách phòng IT---------");
+					it = true;
+				}
+				System.out.println("Phòng " + pb.maPhongBan + " có : " + pb.danhSachNhanVien.length);
+			} else if (pb instanceof PhongKiThuat) {
+				if (!kt) {
+					System.out.println("---------Danh sách phòng Kĩ Thuật---------");
+					kt = true;
+				}
+				System.out.println("Phòng " + pb.maPhongBan + " có : " + pb.danhSachNhanVien.length);
+			} else if (pb instanceof PhongTaiChinh) {
+				if (!tc) {
+					System.out.println("---------Danh sách phòng Tài Chính---------");
+					tc = true;
+				}
+				System.out.println("Phòng " + pb.maPhongBan + " có : " + pb.danhSachNhanVien.length);
+			} else if (pb instanceof PhongTuyenDung) {
+				if (!td) {
+					System.out.println("---------Danh sách phòng Tuyển Dụng---------");
+					td = true;
+				}
+				System.out.println("Phòng " + pb.maPhongBan + " có : " + pb.danhSachNhanVien.length);
+			}
+		}
+
 	}
-	
+
 	public void timKiemNV() {
 		Scanner sc = new Scanner(System.in);
+
 		System.out.println("____________________________________");
 		System.out.println("Nhập mã NHÂN VIÊN muốn tìm : ");
 		String maNhanVien = sc.nextLine();
+
+		// check coi nv co trong ds toan cty ko
+		if (checkNVCty(maNhanVien)) {
 			for (PhongBan pb : danhSachPhongBan) {
-			for(String NhanVien : pb.danhSachNhanVien) {
-				if (maNhanVien.equals(NhanVien)) {
-					System.out.println("Đã tìm thấy mã nhân viên " + maNhanVien + " tại phòng ban : " + pb.getMaPhongBan()+ ", Tên phòng ban: " + pb.getTenPhongBan());
-					return;
+				for (String NhanVien : pb.danhSachNhanVien) {
+					if (maNhanVien.equals(NhanVien)) {
+						System.out.println("Đã tìm thấy mã nhân viên " + maNhanVien + " tại phòng ban có mã : "
+								+ pb.getMaPhongBan() + ", Tên phòng ban: " + pb.getTenPhongBan());
+						return;
 					}
 				}
 			}
-		System.out.println("Không tìm thấy mã nhân viên đó !!!");
+		} else {
+			System.out.println("Không tìm thấy nhân viên này trong công ty!!!");
+			return;
+		}
+		System.out.println("Nhân viên đó chưa thuộc phòng nào !!!");
+
 	}
-	
+
 	public PhongBan[] getDanhSachPhongBan() {
 		return danhSachPhongBan;
 	}
@@ -369,93 +412,101 @@ public class DanhSachPhongBan {
 				return true;
 		return false;
 	}
+
 	public int checkMaNV2(String maNV, PhongBan phongBan) {
-		for (int i = 0;i<phongBan.danhSachNhanVien.length;i++)
+		for (int i = 0; i < phongBan.danhSachNhanVien.length; i++)
 			if (maNV.equals(phongBan.danhSachNhanVien[i]))
 				return i;
 		return -1;
 	}
 
+	public boolean checkNVCty(String maNhanVien) {
+		for (NhanVien nv : DanhSachNhanVien.dsnvct)
+			if (nv.maNhanVien.equals(maNhanVien))
+				return true;
+		return false;
+	}
+
 	// run
 //	public static void main(String[] args) {
-////			DanhSachPhongBan danhSachPhongBan=new DanhSachPhongBan();
-//		
-//		DanhSachPhongBan danhSachPhongBan = FileManager.docFile();
+//			DanhSachPhongBan danhSachPhongBan = FileManager.docFile();
+
+//	Scanner sc = new Scanner(System.in);
+//	int luaChon;
+//	
+//	do {
+//			System.out.println("================MENU================");
+//			System.out.println("1. Thêm phòng ban");
+//            System.out.println("2. Xóa phòng ban");
+//            System.out.println("3. Tìm kiếm phòng ban");
+//            System.out.println("4. Sửa thông tin phòng ban");
+//            System.out.println("5. Hiển thị thông tin phòng ban");	 
+//            System.out.println("6. Phục hồi phòng ban");	
+//            System.out.println("7. Thống kê phòng ban");
+//            System.out.println("8. Tìm kiếm nhân viên");
+//            System.out.println("0. Thoát và lưu file");
+//            System.out.print("Nhập lựa chọn: ");
+//            luaChon = sc.nextInt();
 //
-////		Scanner sc = new Scanner(System.in);
-//		int luaChon;
-//		
-//		do {
-//				System.out.println("================MENU================");
-//			 	System.out.println("1. Thêm phòng ban");
-//	            System.out.println("2. Xóa phòng ban");
-//	            System.out.println("3. Tìm kiếm phòng ban");
-//	            System.out.println("4. Sửa thông tin phòng ban");
-//	            System.out.println("5. Hiển thị thông tin phòng ban");	 
-//	            System.out.println("6. Phục hồi phòng ban");	
-//	            System.out.println("7. Thống kê phòng ban");
-//	            System.out.println("8. Tìm kiếm nhân viên");
-//	            System.out.println("0. Thoát và lưu file");
-//	            System.out.print("Nhập lựa chọn: ");
-//	            luaChon = sc.nextInt();
-//
-//	            switch(luaChon) {
-//	            case 1 : 
-//	            	System.out.println("____________________________________");
-//	            	System.out.println("Chọn loại phòng ban : ");
-//	            	System.out.println("1. Phòng IT");
-//                    System.out.println("2. Phòng kĩ thuật");
-//                    System.out.println("3. Phòng tài chính");
-//                    System.out.println("4. Phòng tuyển dụng");
-//                    System.out.println("____________________________________");
-//                    int loaiPhong = sc.nextInt();
-//                 
-//                    PhongBan phongBan = null;
-//                    if(loaiPhong == 1)
-//                    	phongBan = new PhongIT();
-//                    else if(loaiPhong == 2)
-//                    	phongBan = new PhongKiThuat();
-//                    else if(loaiPhong == 3)
-//                    	phongBan = new PhongTaiChinh();
-//                    else if(loaiPhong == 4)
-//                    	phongBan = new PhongTuyenDung();                 
-//                    if(phongBan != null) {
-//                    	phongBan.nhapThongTinPhongBan();
-//                    	danhSachPhongBan.themPhongBan(phongBan);
-//                    }
-//                    else System.out.println("Không tồn tại phòng ban đó!!");
-//                    break;
-//	            case 2:	
-//	            	danhSachPhongBan.xoa();
-//	            	break;
-//	            case 3:
-//	            	danhSachPhongBan.timKiem();
-//	            	break;
-//	            case 4:
-//	            	danhSachPhongBan.suaPhongBan();
-//	            	break;
-//	            case 5:
-//	            	System.out.println("=========Danh sách phòng ban========");
-//	            	danhSachPhongBan.hienThiPhongBan();
-//	            	break;
-//	            case 6:
-//	            	danhSachPhongBan.phucHoiPhongBan();
-//	            	break;
-//	            case 7:
-//	            	danhSachPhongBan.thongKePhongBan();
-//	            	break;
-//	            case 8:
-//	            	danhSachPhongBan.timKiemNV();
-//	            	break;
-//	            case 0:
-//	            	FileManager.ghiFile(danhSachPhongBan);
-//	            	System.out.println("========================================");
-//					System.out.println("             	Thoát!!!!!!                 ");
-//					System.out.println("========================================");
-//	            	break;
-//	            default:
-//	            	System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại!!!");
-//	            }
-//	            
-//		}while(luaChon!=0);	
+//            switch(luaChon) {
+//            case 1 : 
+//            	System.out.println("____________________________________");
+//            	System.out.println("Chọn loại phòng ban : ");
+//            	System.out.println("1. Phòng IT");
+//                System.out.println("2. Phòng kĩ thuật");
+//                System.out.println("3. Phòng tài chính");
+//                System.out.println("4. Phòng tuyển dụng");
+//                System.out.println("____________________________________");
+//                int loaiPhong = sc.nextInt();
+//             
+//                PhongBan phongBan = null;
+//                if(loaiPhong == 1)
+//                	phongBan = new PhongIT();
+//                else if(loaiPhong == 2)
+//                	phongBan = new PhongKiThuat();
+//                else if(loaiPhong == 3)
+//                	phongBan = new PhongTaiChinh();
+//                else if(loaiPhong == 4)
+//                	phongBan = new PhongTuyenDung();                 
+//                if(phongBan != null) {
+//                	phongBan.nhapThongTinPhongBan(danhSachPhongBan);
+//                	danhSachPhongBan.themPhongBan(phongBan);
+//                }
+//                else System.out.println("Không tồn tại phòng ban đó!!");
+//                break;
+//            case 2:	
+//            	danhSachPhongBan.xoa();
+//            	break;
+//            case 3:
+//            	danhSachPhongBan.timKiem();
+//            	break;
+//            case 4:
+//            	danhSachPhongBan.suaPhongBan();
+//            	break;
+//            case 5:
+//            	System.out.println("=========Danh sách phòng ban========");
+//            	danhSachPhongBan.hienThiPhongBan();
+//            	break;
+//            case 6:
+//            	danhSachPhongBan.phucHoiPhongBan();
+//            	break;
+//            case 7:
+//            	danhSachPhongBan.thongKePhongBan();
+//            	break;
+//            case 8:
+//            	danhSachPhongBan.timKiemNV();
+//            	break;
+//            case 0:
+//            	FileManager.ghiFile(danhSachPhongBan);
+//            	System.out.println("========================================");
+//				System.out.println("             	Thoát!!!!!!                 ");
+//				System.out.println("========================================");
+//            	break;
+//            default:
+//            	System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại!!!");
+//            }
+//            
+//	}while(luaChon!=0);	
+//	}
+//	
 }

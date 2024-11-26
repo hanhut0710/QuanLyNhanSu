@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 
 public class FileManager {
 	
-	private static final String File_Path = "C:\\Users\\user\\eclipse-workspace\\QuanLyNhanSu\\src\\input.txt";
+	private static final String File_Path = "input.txt";
 	
 	public static DanhSachPhongBan docFile() {
 		DanhSachPhongBan danhSachPhongBan = new DanhSachPhongBan();
@@ -24,7 +24,7 @@ public class FileManager {
 			{
 				String[] parts = line.split("\t");
 				if(parts[0]==null)
-					System.out.println("la null");
+					System.out.println("Không thể đọc được !!!");
 				String loaiPhong = parts[0];
 				String maPhongBan = parts[1];
 				String tenPhongBan = parts[2];
