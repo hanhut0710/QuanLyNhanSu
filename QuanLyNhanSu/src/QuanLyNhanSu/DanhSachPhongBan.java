@@ -346,19 +346,26 @@ public class DanhSachPhongBan {
 	public void timKiemNV() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("____________________________________");
-		System.out.println("Nhập mã NHÂN VIÊN muốn tìm : ");
-		String maNhanVien = sc.nextLine();
-
-		for (PhongBan pb : danhSachPhongBan) {
+		boolean found = false;
+		do {
+			System.out.println("Nhập mã NHÂN VIÊN muốn tìm : ");
+			String maNhanVien = sc.nextLine();
+			for (PhongBan pb : danhSachPhongBan) {
 			for(String NhanVien : pb.danhSachNhanVien) {
 				if (maNhanVien.equals(NhanVien)) {
 					System.out.println("Đã tìm thấy mã nhân viên " + maNhanVien + " tại phòng ban : " + pb.getMaPhongBan()+ ", Tên phòng ban: " + pb.getTenPhongBan());
-					return;
+					found = true;
+					break;
+					}
 				}
+				if (found) break;
 			}
-		}
-		System.out.println("Không tìm thấy mã nhân viên đó !!!");
+			 if (!found) {
+		            System.out.println("Không tìm thấy mã nhân viên đó. Vui lòng nhập lại!");
+		        }
+		} while (!found);
 	}
+	
 	public PhongBan[] getDanhSachPhongBan() {
 		return danhSachPhongBan;
 	}
