@@ -55,7 +55,7 @@ public abstract class PhongBan {
 		System.out.println("Danh Sách nhân viên : ");
 		for (String nv : danhSachNhanVien) {
 			for (NhanVien nvCT : DanhSachNhanVien.dsnvct) {
-				if (nv.equals(nvCT.maNhanVien))
+				if (nv.equals(nvCT.maNhanVien)&&!nvCT.isDeleted())
 					System.out.println("	- " + nv + " 	: " + nvCT.hoTen);
 			}
 		}
