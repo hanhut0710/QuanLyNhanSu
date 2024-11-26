@@ -312,6 +312,53 @@ public class DanhSachPhongBan {
 				}
 	}
 
+	public void thongKePhongBan() {
+		if (danhSachPhongBan.length == 0) {
+			System.out.println("Danh sách phòng ban hiện tại đang trống.");
+			return;
+		}
+		int maxSoNhanVien = -1;
+		int minSoNhanVien = Integer.MAX_VALUE;
+
+		for (PhongBan pb : danhSachPhongBan) {
+			int soNhanVien = pb.danhSachNhanVien.length;
+			if (soNhanVien > maxSoNhanVien) {
+				maxSoNhanVien = soNhanVien;
+			}
+			if (soNhanVien < minSoNhanVien) {
+				minSoNhanVien = soNhanVien;
+			}
+		}
+		System.out.println("Phòng ban có số lượng nhân viên nhiều nhất (" + maxSoNhanVien + " nhân viên):");
+		for (PhongBan pb : danhSachPhongBan) {
+			if( pb.danhSachNhanVien.length == maxSoNhanVien) {
+				System.out.println("Mã phòng ban: " + pb.getMaPhongBan() + ", Tên phòng ban: " + pb.getTenPhongBan());
+			}
+		}
+		System.out.println("Phòng ban có số lượng nhân viên ít nhất (" + minSoNhanVien + " nhân viên):");
+		for (PhongBan pb : danhSachPhongBan) {
+			if (pb.danhSachNhanVien.length == minSoNhanVien) {
+				System.out.println("Mã phòng ban: " + pb.getMaPhongBan() + ", Tên phòng ban: " + pb.getTenPhongBan());
+			}
+		}
+	}
+	
+	public void timKiemNV() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("____________________________________");
+		System.out.println("Nhập mã NHÂN VIÊN muốn tìm : ");
+		String maNhanVien = sc.nextLine();
+
+		for (PhongBan pb : danhSachPhongBan) {
+			for(String NhanVien : pb.danhSachNhanVien) {
+				if (maNhanVien.equals(NhanVien)) {
+					System.out.println("Đã tìm thấy mã nhân viên " + maNhanVien + " tại phòng ban : " + pb.getMaPhongBan()+ ", Tên phòng ban: " + pb.getTenPhongBan());
+					return;
+				}
+			}
+		}
+		System.out.println("Không tìm thấy mã nhân viên đó !!!");
+	}
 	public PhongBan[] getDanhSachPhongBan() {
 		return danhSachPhongBan;
 	}
