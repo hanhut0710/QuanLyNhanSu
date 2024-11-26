@@ -3,15 +3,18 @@ package QuanLyNhanSu;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class DanhSachPhongBan {
+public class DanhSachPhongBan implements QuanLiDanhSach {
 	private PhongBan[] danhSachPhongBan = new PhongBan[0];
 
-	public void themPhongBan(PhongBan phongBan) {
+	
+
+	public void themPhongBan(PhongBan phongBan) {   //themPhongBan
 		danhSachPhongBan = Arrays.copyOf(danhSachPhongBan, danhSachPhongBan.length + 1);
 		danhSachPhongBan[danhSachPhongBan.length - 1] = phongBan;
 	}
 
-	public void hienThiPhongBan() {
+	@Override
+	public void hienThiDanhSach() {    //hienThiPhongBan
 		boolean hienThi = false;
 		int soThuTu = 1;
 
@@ -75,14 +78,15 @@ public class DanhSachPhongBan {
 
 	}
 
-	public void suaPhongBan() {
+	@Override
+	public void sua() {    //suaPhongBan
 		boolean timThay = false;
 		int luaChon;
 		int position = 0;
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("=========Danh sách phòng ban========");
-		hienThiPhongBan();
+		hienThiDanhSach();
 
 		System.out.println("Nhập mã phòng ban bạn muốn sửa : ");
 		String maPhongBan = sc.nextLine();
@@ -222,7 +226,8 @@ public class DanhSachPhongBan {
 			System.out.println("Không tìm thấy phòng ban có mã " + maPhongBan + "!!!");
 	}
 
-	public void timKiem() {
+	@Override
+	public void timKiem() {			//tim kiem phong ban
 		int index = 0;
 		sapXepPhongBan();
 		Scanner sc = new Scanner(System.in);
@@ -245,11 +250,12 @@ public class DanhSachPhongBan {
 		System.out.println("Không tìm thấy phòng ban đó !!!");
 	}
 
+	@Override
 	public void xoa() {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("============Danh sách phòng ban hiện tại=============");
-		hienThiPhongBan();
+		hienThiDanhSach();
 
 		System.out.println("Nhập mã phòng muốn xóa : ");
 		String maPhongBan = sc.nextLine();
@@ -312,7 +318,8 @@ public class DanhSachPhongBan {
 				}
 	}
 
-	public void thongKePhongBan() {
+	@Override
+	public void thongKe() {
 		if (danhSachPhongBan.length == 0) {
 			System.out.println("Danh sách phòng ban hiện tại đang trống.");
 			return;
