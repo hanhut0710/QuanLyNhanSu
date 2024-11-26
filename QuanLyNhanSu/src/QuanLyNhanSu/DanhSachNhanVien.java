@@ -195,6 +195,16 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	    return false;
 	}
 	
+	public boolean kiemTraSoDienThoai(String soDienThoai) 
+	{
+	    for (NhanVien nv : ds) {
+	        if (nv.getMaNhanVien().equals(soDienThoai)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
 	@Override
 	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
@@ -263,13 +273,23 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				nv.nhapThongTinNhanVien();
 				
 				while(true)
-				{
+				{	
+					boolean checkedMaNhanVien = true;
+					boolean checkedSoDienThoai = true;
 					if(kiemTraMaNhanVien(nv.getMaNhanVien()))
 					{
 						System.out.println("Ma nhan vien da ton tai. Vui long nhap lai");
-						nv.nhapThongTinNhanVien();
+						nv.setMaNhanVien(sc.nextLine());
+						checkedMaNhanVien = false;
 					}
-					else break;
+					if(kiemTraSoDienThoai(nv.getSoDienThoai()))
+					{
+						System.out.println("So dien thoai da ton tai. Vui long nhap lai");
+						nv.nhapThongTinNhanVien();
+						checkedSoDienThoai = false;
+					}
+					if(checkedMaNhanVien && checkedSoDienThoai)
+						break;
 				}
 				
 				ds = Arrays.copyOf(ds, ds.length+1);
@@ -307,7 +327,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		if(nvCanSua != null)
 		{
 			System.out.println("Nhan vien can sua: " +nvCanSua.maNhanVien);
-			/*Nhập lại 1 thông tin hay nhập lại hết????*/
 			System.out.println("Moi nhap thong tin muon sua");
 			System.out.println("0. Sua toan bo thong tin");
 			System.out.println("1. Sua ma nhan vien");
