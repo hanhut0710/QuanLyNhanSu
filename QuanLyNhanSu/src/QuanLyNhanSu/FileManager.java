@@ -1,6 +1,5 @@
 package QuanLyNhanSu;
 
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
-
 
 
 public class FileManager {
@@ -88,4 +86,3 @@ public class FileManager {
 		}
 	}
 }
-
