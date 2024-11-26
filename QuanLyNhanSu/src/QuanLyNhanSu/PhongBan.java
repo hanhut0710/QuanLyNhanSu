@@ -36,6 +36,15 @@ public abstract class PhongBan {
 		this.quanLi = quanLi;
 	}
 
+
+	public String[] getDanhSachNhanVien() {
+		return danhSachNhanVien;
+	}
+
+	public void setDanhSachNhanVien(String[] danhSachNhanVien) {
+		this.danhSachNhanVien = danhSachNhanVien;
+	}
+
 	public abstract void nhapThongTinPhongBan();
 
 	public void xuat(int stt) {

@@ -6,6 +6,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 
 
@@ -21,11 +22,15 @@ public class FileManager {
 			String line;
 			while((line = br.readLine()) != null)
 			{
-				String[] parts = line.split(",");
+				String[] parts = line.split("\t");
+				if(parts[0]==null)
+					System.out.println("la null");
 				String loaiPhong = parts[0];
 				String maPhongBan = parts[1];
 				String tenPhongBan = parts[2];
 				boolean trangThai = Boolean.parseBoolean(parts[3]);
+				String quanLi = parts[4];
+				String[] nhanVien = Arrays.copyOfRange(parts, 5, parts.length);
 				PhongBan phongBan = null;
 				if(loaiPhong.equals("PhongIT")) {
 					phongBan = new PhongIT();
@@ -44,6 +49,8 @@ public class FileManager {
 				phongBan.setMaPhongBan(maPhongBan);
 				phongBan.setTenPhongBan(tenPhongBan);
 				phongBan.setTrangThai(trangThai);
+				phongBan.setQuanLi(quanLi);
+				phongBan.setDanhSachNhanVien(nhanVien);
 				danhSachPhongBan.themPhongBan(phongBan);
 			}						
 			
@@ -73,8 +80,11 @@ public class FileManager {
 			else if (phongBan instanceof PhongTuyenDung){
 				loaiPhong = "PhongTuyenDung";
 			}
-			String line = loaiPhong + "," + phongBan.getMaPhongBan() + "," + phongBan.getTenPhongBan() + "," + phongBan.isTrangThai();
-			
+			String line = loaiPhong + "\t" + phongBan.getMaPhongBan() + "\t" + phongBan.getTenPhongBan() + "\t" + phongBan.isTrangThai()+"\t"+phongBan.getQuanLi();
+			for(String nv : phongBan.danhSachNhanVien)
+			{
+				line += "\t" + nv;
+			}
 			bw.write(line);
 			bw.newLine();
 		}
@@ -85,4 +95,5 @@ public class FileManager {
 			System.out.println("Không thể ghi file với lỗi : "+e.getMessage());
 		}
 	}
+	
 }

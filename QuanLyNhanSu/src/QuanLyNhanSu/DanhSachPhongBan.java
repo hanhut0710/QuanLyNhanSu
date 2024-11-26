@@ -98,6 +98,7 @@ public class DanhSachPhongBan {
 						System.out.println("2. Sửa tên phòng ban");
 						System.out.println("3. Sửa tên quản lí");
 						System.out.println("4. Thêm nhân viên vào phòng");
+						System.out.println("5. Xóa nhân viên trong phòng");
 						System.out.println("0. Thoát");
 						System.out.println("Nhập lựa chọn : ");
 						luaChon = sc.nextInt();
@@ -148,11 +149,11 @@ public class DanhSachPhongBan {
 
 						case 4:
 							sc.nextLine();
-
 							boolean Valid = false;
 							boolean Exist = false;
 							String maNV;
 							do {
+								 Valid = false;
 								System.out.println("Nhập mã nhân viên thêm vào phòng : ");
 								maNV = sc.nextLine();
 								for (NhanVien nv : DanhSachNhanVien.dsnvct) {
@@ -175,7 +176,31 @@ public class DanhSachPhongBan {
 									System.out.println("Nhân viên bị trùng (đã ở trong phòng)");
 							} while (!Valid);
 							break;
-
+						
+						case 5:
+							sc.nextLine();
+							boolean kiemTra = false;
+							do {
+								System.out.println("Nhập mã nhân viên muốn xóa : ");
+								String maNhanVien = sc.nextLine();
+								
+								if (checkMaNV2(maNhanVien, phongBan) != -1) {
+									for(int i = checkMaNV2(maNhanVien, phongBan);i<phongBan.danhSachNhanVien.length-1;i++)
+										phongBan.danhSachNhanVien[i]=phongBan.danhSachNhanVien[i+1];
+									phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,phongBan.danhSachNhanVien.length - 1);
+									kiemTra=true;
+									System.out.println("Đã xóa nhân viên thành công !!!");
+								}
+								else {
+									System.out.println("Không tìm thấy nhân viên này");
+									break;
+								
+								}
+								
+//								if (!kiemTra)
+//									System.out.println("Không tìm nhân viên trong danh sách !!!");
+							} while (!kiemTra);
+							break;
 						case 0:
 							System.out.println("-------------Phòng ban sau khi chỉnh sửa----------");
 							phongBan.xuat();
@@ -296,6 +321,12 @@ public class DanhSachPhongBan {
 			if (maNV.equals(nv))
 				return true;
 		return false;
+	}
+	public int checkMaNV2(String maNV, PhongBan phongBan) {
+		for (int i = 0;i<phongBan.danhSachNhanVien.length;i++)
+			if (maNV.equals(phongBan.danhSachNhanVien[i]))
+				return i;
+		return -1;
 	}
 
 	// run
