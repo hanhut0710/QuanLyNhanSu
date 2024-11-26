@@ -120,7 +120,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
-					System.out.println("aaaaaaaaa"+ds.length+"aaaaaaaaaa"+ds[ds.length - 1]);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);
@@ -128,7 +127,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 				}
 				
 			}
-			System.out.println(ds.length);
+			
 			br.close();
 			fr.close();
 		} catch(Exception e) {	
@@ -137,7 +136,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	}
 	
 	public NhanVien check(String maNhanVien) {
-		for(NhanVien x : ds) {
+		for(NhanVien x : this.ds) {
 			if(maNhanVien.equals(x.getMaNhanVien()))
 				return x;
 		}
@@ -194,7 +193,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	
 	public boolean kiemTraMaNhanVien(String maNhanVien) 
 	{
-		System.out.println(ds.length);
 	    for (NhanVien nv : ds) {
 	        if (nv.getMaNhanVien().equals(maNhanVien)) {
 	            return true;
@@ -840,7 +838,8 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		                    dsnv.thongKe();
 		                    break;
 		                case 8:
-		                	
+		                	System.out.println("mã nhân viên: ");
+		                	System.out.println(dsnv.check(sc.nextLine()));
 		                    System.out.println("Thoat chuong trinh thanh cong!");
 		                    break;
 		                default:
@@ -851,6 +850,12 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		            System.out.println("Thao tac khong hop le. Vui long nhap thao tac (chon 1-8)");
 		        }
 		    } while (choose != 8);
+		}
+
+		@Override
+		public void docFile(DanhSachNhanVien danhSachNhanVien) {
+			// TODO Auto-generated method stub
+			
 		}
 
 	

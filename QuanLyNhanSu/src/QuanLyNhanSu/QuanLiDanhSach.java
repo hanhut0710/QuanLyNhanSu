@@ -9,4 +9,5 @@ public interface QuanLiDanhSach {
 	public void thongKe();
 	public void docFile();
 	public void ghiFile();
+	void docFile(DanhSachNhanVien danhSachNhanVien);
 }

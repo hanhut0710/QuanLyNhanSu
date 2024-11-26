@@ -29,20 +29,20 @@ public class DuAn implements Serializable{
 		this.danhSachNhanVien = new DanhSachNhanVien();
 	}
 	
-	public void themNhanVienVaoDuAn(String maNhanVien) {
-		NhanVien x = new NhanVien();
-		x = danhSachNhanVien.check(maNhanVien);
-		System.out.println(this.danhSachNhanVien.ds.length);
-		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
-		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
-		System.out.println(this.danhSachNhanVien.ds.length);
-		System.out.println(x);
-		System.out.println("Thêm nhân viên thành công !!!");
-	}
-	
 	public void themNhanVienVaoDuAn(NhanVien x) {
 		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
 		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
+		System.out.println("Thêm nhân viên thành công !!!");
+	}
+	
+	public void xoaNhanVienKhoiDuAn(NhanVien x) {
+		for(int i=0; i<this.danhSachNhanVien.ds.length - 1; i++) {
+			if(!x.equals(this.danhSachNhanVien.ds[i])) {
+				continue;
+			}
+			this.danhSachNhanVien.ds[i] = this.danhSachNhanVien.ds[i + 1];
+		}
+		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length - 1);
 		System.out.println("Thêm nhân viên thành công !!!");
 	}
 	
@@ -89,26 +89,33 @@ public class DuAn implements Serializable{
 		System.out.println("Ngày dự kiến kết thúc: "+this.duKienKetThuc.getDate());
 	}
 	public void xuatThongTinDuAn(int stt) {
-		System.out.printf("%-5d %-10s %-20s %-15s %-15s \n", stt, this.maDuAn, this.tenDuAn, this.ngayBatDau.getDate(), this.duKienKetThuc.getDate());
+		System.out.println("Số thứ tự: "+ stt);
+		System.out.println("Mã dự án: "+this.maDuAn);
+		System.out.println("Tên dự án: "+this.tenDuAn);
+		System.out.println("Ngày bắt đầu: "+this.ngayBatDau.getDate());
+		System.out.println("Ngày dự kiến kết thúc: "+this.duKienKetThuc.getDate());
+		xuatThongTinDanhSachNhanVien();
 	}
 	
 	public void xuatThongTinDanhSachNhanVien() {
-		System.out.println("======== Danh sách nhân viên của dự án "+this.maDuAn+" ==========");
-		System.out.printf("%-10s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
+		System.out.println("============================ Danh sách nhân viên của dự án "+this.maDuAn+" =================================");
+		System.out.printf("%-15s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
 		for(NhanVien x : danhSachNhanVien.ds) {
 			if(x instanceof NhanVienHopDong) {
-				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
+				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
 			}
 			else if(x instanceof NhanVienChinhThuc) {
-				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
+				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
 			}
 			else if(x instanceof QuanLi) {
-				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
+				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
 			}
 			else if(x instanceof ThucTapSinh) {
-				System.out.printf("%-10s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
+				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
 			}
 		}
+		System.out.println("=================================================================================================");
+
 	}
 	
 	public String getMaDuAn() {

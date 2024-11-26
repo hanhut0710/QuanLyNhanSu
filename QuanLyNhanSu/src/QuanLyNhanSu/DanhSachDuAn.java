@@ -23,7 +23,7 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private DuAn[] danhSachDuAn= new DuAn[0];
+	public DuAn[] danhSachDuAn= new DuAn[0];
 	public static int stt = 0;
 	public DanhSachDuAn() {
 		this.danhSachDuAn = new DuAn[0];
@@ -57,14 +57,10 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		this.danhSachDuAn = danhSachDuAn;
 	}
 
-	private void header() {
-		String[] headers = {"STT","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày dự kiến kết thúc"};
-		System.out.printf("%-5s %-10s %-20s %-15s %15s \n",headers[0], headers[1], headers[2], headers[3], headers[4]);
-	}
 	
 	public void hienThiDanhSach() {
 		int soThuTu = 1;
-		header();
+		System.out.println("==================================== Thông tin dự án ============================================");
 		for(DuAn x : danhSachDuAn) {
 			if(!x.isTrangThaiXoa()) {
 				x.xuatThongTinDuAn(soThuTu);
@@ -386,8 +382,7 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		System.out.printf("%-10s %-20s %-15s %-15s %15s","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lương nhân viên");
 		System.out.printf("%-10s %-20s %-15s %-15s %15s", this.danhSachDuAn[min].getMaDuAn(), this.danhSachDuAn[min].getTenDuAn(), this.danhSachDuAn[min].getNgayBatDau().getDate(), this.danhSachDuAn[min].getDuKienKetThuc().getDate(), minSoluongNhanVien);
 	}
-	@Override
-	public void docFile()  {
+	public void docFile(DanhSachNhanVien danhSachNhanVien)  {
 		// TODO Auto-generated method stub
 //		try {
 //			FileInputStream fileIn = new FileInputStream("DuAn.txt");
@@ -439,8 +434,10 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 						duKienKetThuc.setDate(null);
 					}
 					String trangThaiXoa = part[4].trim();
-					for(int i=5; i<part.length; i++) {
-						duAn.themNhanVienVaoDuAn(part[i].trim());
+					String maNhanVien[] = Arrays.copyOfRange(part, 5, part.length);
+					for(int i=0; i<maNhanVien.length; i++) {
+						NhanVien nhanVien = danhSachNhanVien.check(maNhanVien[i]);
+						duAn.themNhanVienVaoDuAn(nhanVien);
 					}
 					duAn.setMaDuAn(maDuAn);
 					duAn.setTenDuAn(tenDuAn);
@@ -462,6 +459,8 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 					break;
 				
 			}
+			fr.close();
+			br.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("File không tồn tại");
 		
@@ -469,6 +468,7 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
 	}
 	@Override
 	public void ghiFile() {
@@ -523,21 +523,43 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 			return true;
 	}
 	
-	public void themNhanVienVaoDanhSachDuAn(NhanVien x) {
+	public void themNhanVienVaoDanhSachDuAn(DanhSachNhanVien danhSachNhanVien) {
+		System.out.println("======= Danh sách nhân viên =======");
+		danhSachNhanVien.hienThiDanhSach();
+		System.out.println("======= Thêm nhân viên vào dự án =======");
+		System.out.print("Nhập mã nhân viên muốn thêm vào dự án: ");
+		Scanner sc = new Scanner(System.in);	
+	
+		String maNhanVien = sc.nextLine();
+		boolean ok = false;
+		NhanVien x = new NhanVien();
+		for(NhanVien nhanVien : danhSachNhanVien.ds) {
+			if(maNhanVien.equals(nhanVien.getMaNhanVien())) {
+				ok = true;
+				x = nhanVien;
+				break;
+			}
+		}
+		if(!ok) {
+			System.out.println("Nhân viên không tồn tại !!!");
+			return;
+		}
+		
 		if(!checkDuAn()) {
 			System.out.println("Hiện tại chưa có dự án để thêm nhân viên");
 			return;
 		}
 		for(DuAn duAn : danhSachDuAn) {
-			if(duAn.checkNhanVien(x)) {
-				System.out.println("Nhân viên đã làm ở dự án khác ");
-				return;
+			for(NhanVien nhanVien : duAn.getDanhSachNhanVien().ds) {
+				if(nhanVien.equals(x)) {
+					System.out.println("Nhân viên đã làm ở dự án khác !!!");
+					return;
+				}
 			}
 		}
 		String maDuAn;
 		do {
 			System.out.println("----Thêm nhân viên vào dự án----");
-			Scanner sc = new Scanner(System.in);
 			System.out.print("Hãy nhập mã dự án mà bạn muốn thêm vào: ");
 			maDuAn = sc.nextLine();
 			if(checkMaDuAn(maDuAn)) {
@@ -550,6 +572,30 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 			}
 		}
 	}
+	public void xoaNhanVienKhoiDanhSach(DanhSachNhanVien danhSachNhanVien) {
+		xuatNhanVienCuaCacDuAn();
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nhập mã nhân viên muốn xóa khỏi dự án: ");
+		String maNhanVien = sc.nextLine();
+		boolean ok = false;
+		for(NhanVien nhanVien : danhSachNhanVien.ds) {
+			if(maNhanVien.equals(nhanVien.getMaNhanVien())) {
+				ok = true;
+				break;
+			}
+		}
+		if(!ok) {
+			System.out.println("Nhân viên không tồn tại !!!");
+			return;
+		}
+		for(DuAn duAn : danhSachDuAn) {
+			for(NhanVien x : duAn.getDanhSachNhanVien().ds) {
+				if(x.getMaNhanVien().equals(maNhanVien)) {
+					duAn.xoaNhanVienKhoiDuAn(x);
+				}
+			}
+		}
+	}
 	
 	public void xuatNhanVienCuaCacDuAn() {
 		for(DuAn x : danhSachDuAn) {
@@ -557,6 +603,12 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 				continue;
 			x.xuatThongTinDanhSachNhanVien();
 		}
+	}
+
+	@Override
+	public void docFile() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
