@@ -6,7 +6,7 @@ public class Display {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int luaChon;
+		int luaChon = 0;
 		DanhSachNhanVien danhSachNhanVien = new DanhSachNhanVien();
 		DanhSachDuAn danhSachDuAn = new DanhSachDuAn();
 		danhSachNhanVien.docFile();
@@ -19,14 +19,41 @@ public class Display {
 			System.out.println("3. Dự án ");
 			System.out.println("0. Thoát");
 			System.out.print("Hãy chọn tab muốn vào: ");
-			luaChon = sc.nextInt();
+			luaChon = Integer.parseInt(sc.nextLine());
 			if(luaChon == 0) {
 				System.out.println("Thoát chương trình !!");
+				danhSachNhanVien.ghiFile();
+				danhSachDuAn.ghiFile();
 				break;
 			}
 			else if(luaChon == 1) {
 				while(true) {
-					
+					System.out.println("========= Menu =========");
+					System.out.println("1. Thêm nhân viên mới");
+					System.out.println("2. Sửa nhân viên");
+					System.out.println("3. Xóa nhân viên");
+					System.out.println("4. Hiển thị danh sách nhân viên");
+					System.out.println("5. Tìm kiếm nhân viên");
+					System.out.println("6. Thống kê danh sách nhân viên");
+					System.out.println("0. Thoát");
+					System.out.print("Hãy nhập tab tab muốn vào: ");
+					luaChon = Integer.parseInt(sc.nextLine());
+					if(luaChon == 1)
+						danhSachNhanVien.them();
+					else if(luaChon == 2)
+						danhSachNhanVien.sua();
+					else if(luaChon == 3)
+						danhSachNhanVien.xoa();
+					else if(luaChon == 4)
+						danhSachNhanVien.hienThiDanhSach();
+					else if(luaChon == 5)
+						danhSachDuAn.timKiem();
+					else if(luaChon == 6)
+						danhSachDuAn.thongKe();
+					else if(luaChon == 0)
+						break;
+					else 
+						System.out.println("Vui lòng nhập số từ (1-6) để chọn");
 				}
 			}
 			else if(luaChon == 2) {
@@ -121,7 +148,7 @@ public class Display {
 					System.out.println("10. Dữ liệu dự án");
 					System.out.println("0. Thoát");
 					System.out.print("Hãy nhập tab tab muốn vào: ");
-					luaChon = sc.nextInt();
+					luaChon = Integer.parseInt(sc.nextLine());
 					if(luaChon == 1)
 						danhSachDuAn.them();
 					else if(luaChon==2)
@@ -144,6 +171,8 @@ public class Display {
 						danhSachDuAn.history();
 					else if(luaChon == 0)
 						break;
+					else 
+						System.out.println("Vui lòng nhập số từ (1-10) để chọn");
 					
 				}
 			}
