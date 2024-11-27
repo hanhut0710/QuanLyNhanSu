@@ -120,7 +120,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
-					System.out.printf("Nhap thanh cong nhan vien %s \n", hoTen);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);

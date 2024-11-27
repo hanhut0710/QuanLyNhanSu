@@ -78,10 +78,10 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 			System.out.println("---------------------------");
 			System.out.println("Bạn muốn sửa dự án số mấy: ");
 			choice = sc.nextInt();
-			if(choice < 0 || choice > stt) {
+			if(choice <= 0 || choice > stt) {
 				System.out.println("Dự án không tồn tại vui lòng nhập lại số thứ tự !!");
 			}
-		}while(choice < 0 || choice > stt);
+		}while(choice <= 0 || choice > stt);
 		while(true) {
 			System.out.println("----Chỉnh sửa thông tin dự án----");
 			System.out.println("1. Sửa mã dự án");
@@ -179,10 +179,10 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 				System.out.println("-------------------------");
 				System.out.print("Bạn muốn xóa dự án số mấy: ");
 				soThuTu = sc.nextInt();
-				if(soThuTu < 0 || soThuTu > stt) {
+				if(soThuTu <= 0 || soThuTu > stt) {
 					System.out.println("Dự án không tồn tại vui lòng nhập lại số thứ tự !!");
 				}
-			} while (soThuTu < 0 || soThuTu > stt );
+			} while (soThuTu <= 0 || soThuTu > stt );
 			int index = 1;
 			for(DuAn x : danhSachDuAn) {
 				if(index != soThuTu) {
@@ -564,6 +564,10 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		for(DuAn duAn : danhSachDuAn) {
 			for(NhanVien nhanVien : duAn.getDanhSachNhanVien().ds) {
 				if(nhanVien.equals(x)) {
+					if(x.isDeleted()) {
+						System.out.println("Nhân viên không tồn tại ");
+						return;
+					}
 					System.out.println("Nhân viên đã làm ở dự án khác !!!");
 					return;
 				}
