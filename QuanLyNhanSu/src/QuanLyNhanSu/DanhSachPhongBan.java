@@ -109,8 +109,17 @@ public class DanhSachPhongBan implements QuanLiDanhSach {
 						switch (luaChon) {
 						case 1:
 							sc.nextLine();
+							boolean Valid1=false;
 							System.out.println("Nhập mã phòng ban mới : ");
-							phongBan.setMaPhongBan(sc.nextLine());
+							String maPhongBanMoi = sc.nextLine();
+							for (PhongBan pb : danhSachPhongBan)
+								if (pb.getMaPhongBan().equals(maPhongBanMoi)) {
+									Valid1=true;
+									System.out.println("Phòng ban này đã tồn tại!!!");
+									break;
+								}
+							if(!Valid1)								
+								phongBan.setMaPhongBan(maPhongBanMoi);
 							break;
 						case 2:
 							sc.nextLine();
@@ -124,8 +133,7 @@ public class DanhSachPhongBan implements QuanLiDanhSach {
 							for (int i = 0; i < phongBan.danhSachNhanVien.length; i++)
 								if (phongBan.getQuanLi().equals(phongBan.danhSachNhanVien[i]))
 									position = i;
-
-							while (!check) {
+						
 								boolean found = false;
 								System.out.println("Nhập mã quản lí mới : ");
 								String quanLi = sc.nextLine();
@@ -133,78 +141,86 @@ public class DanhSachPhongBan implements QuanLiDanhSach {
 									if (quanLi.equals(nv.maNhanVien)) {
 										found = true;
 										if (nv instanceof QuanLi) {
+											if(!kiemTraNhanVienTrongPhongBanKhac(quanLi)) {
 											System.out.println("Đã sửa quản lí cho phòng !");
-											check = true;
 											phongBan.setQuanLi(quanLi);
 											phongBan.danhSachNhanVien[position] = quanLi;
 											break;
-										} else
+											} 
+											else {
+												System.out.println("Nhân viên đã thuộc phòng ban khác!!!");
+												break;
+											}
+										}else
 											System.out.println("Nhân viên đó không phải là quản lí !!!");
 									}
 								}
-								if (!found) {
-									System.out.println("Không tìm thấy mã nhân viên, Vui lòng nhập lại !!!");
-								} else if (!check) {
-									System.out.println("Vui lòng nhập lại !!!");
-								}
-							}
+								if (!found) 
+									System.out.println("Không tìm thấy mã nhân viên, Vui lòng nhập lại !!!");		
 
 							break;
 
 						case 4:
 							sc.nextLine();
-							boolean Valid = false;
+							boolean Valid2 = false;
 							boolean Exist = false;
+							boolean AnotherRoom = false;
 							String maNV;
-							do {
-								Valid = false;
+							
+								Valid2 = false;
+								Exist=false;
+								AnotherRoom = false;
 								System.out.println("Nhập mã nhân viên thêm vào phòng : ");
 								maNV = sc.nextLine();
+															
 								for (NhanVien nv : DanhSachNhanVien.dsnvct) {
 									if (maNV.equals(nv.maNhanVien)) {
 										Exist = true;
 										if (!checkMaNV(maNV, phongBan)) {
-											Valid = true;
-											phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,
-													phongBan.danhSachNhanVien.length + 1);
-											phongBan.danhSachNhanVien[phongBan.danhSachNhanVien.length - 1] = maNV;
-											System.out.println("Đã thêm nhân viên vào phòng !!!");
-											break;
+											Valid2 = true;
+											if(!kiemTraNhanVienTrongPhongBanKhac(maNV)) {
+												AnotherRoom=true;
+												phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,
+														phongBan.danhSachNhanVien.length + 1);
+												phongBan.danhSachNhanVien[phongBan.danhSachNhanVien.length - 1] = maNV;
+												System.out.println("Đã thêm nhân viên vào phòng !!!");
+												break;
+											}											
 										}
 									}
 								}
-
 								if (!Exist) {
 									System.out.println("Không tìm thấy nhân viên trong danh sách công ty!!!");
-								} else if (!Valid)
-									System.out.println("Nhân viên bị trùng (đã ở trong phòng)");
-							} while (!Valid);
+								} else if (!Valid2)
+									System.out.println("Nhân viên đã thuộc phòng ban này!!!");
+								else if (!AnotherRoom)
+									System.out.println("Nhân viên đã thuộc phòng ban khác!!!");
+							
 							break;
 
 						case 5:
 							sc.nextLine();
 							boolean kiemTra = false;
-							do {
+
 								System.out.println("Nhập mã nhân viên muốn xóa : ");
 								String maNhanVien = sc.nextLine();
-
+								if(maNhanVien.equals(phongBan.quanLi))
+								{
+									System.out.println("Không thể xóa quản lý của phòng bàn ! Hãy thay đổi quản lí trước rồi xóa!!!");
+									break;
+								}
 								if (checkMaNV2(maNhanVien, phongBan) != -1) {
-									for (int i = checkMaNV2(maNhanVien, phongBan); i < phongBan.danhSachNhanVien.length
-											- 1; i++)
+									for (int i = checkMaNV2(maNhanVien, phongBan); i < phongBan.danhSachNhanVien.length- 1; i++)
 										phongBan.danhSachNhanVien[i] = phongBan.danhSachNhanVien[i + 1];
 									phongBan.danhSachNhanVien = Arrays.copyOf(phongBan.danhSachNhanVien,
 											phongBan.danhSachNhanVien.length - 1);
-									kiemTra = true;
+
 									System.out.println("Đã xóa nhân viên thành công !!!");
 								} else {
 									System.out.println("Không tìm thấy nhân viên này");
 									break;
 
 								}
-
-//								if (!kiemTra)
-//									System.out.println("Không tìm nhân viên trong danh sách !!!");
-							} while (!kiemTra);
 							break;
 						case 0:
 							System.out.println("-------------Phòng ban sau khi chỉnh sửa----------");
@@ -413,27 +429,34 @@ public class DanhSachPhongBan implements QuanLiDanhSach {
 		return danhSachPhongBan;
 	}
 
-	public boolean checkMaNV(String maNV, PhongBan phongBan) {
+	public boolean checkMaNV(String maNV, PhongBan phongBan) {	//check tung Phong Ban dc truyen vao
 		for (String nv : phongBan.danhSachNhanVien)
 			if (maNV.equals(nv))
 				return true;
 		return false;
 	}
 
-	public int checkMaNV2(String maNV, PhongBan phongBan) {
+	public int checkMaNV2(String maNV, PhongBan phongBan) {				//lay vi tri
 		for (int i = 0; i < phongBan.danhSachNhanVien.length; i++)
 			if (maNV.equals(phongBan.danhSachNhanVien[i]))
 				return i;
 		return -1;
 	}
 
-	public boolean checkNVCty(String maNhanVien) {
+	public boolean checkNVCty(String maNhanVien) {		 //check ca cty
 		for (NhanVien nv : DanhSachNhanVien.dsnvct)
 			if (nv.maNhanVien.equals(maNhanVien))
 				return true;
 		return false;
+	}	
+	
+	private boolean kiemTraNhanVienTrongPhongBanKhac(String maNV) {
+		for (PhongBan phongBan : danhSachPhongBan)
+			for (String nv : phongBan.danhSachNhanVien)
+				if (maNV.equals(nv))
+					return true;
+		return false;
 	}
-
 	// run
 //	public static void main(String[] args) {
 //			DanhSachPhongBan danhSachPhongBan = FileManager.docFile();

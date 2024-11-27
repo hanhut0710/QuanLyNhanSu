@@ -66,6 +66,14 @@ public abstract class PhongBan {
 		System.out.println("Mã Phòng Ban : " + maPhongBan);
 		System.out.println("Tên Phòng Ban : " + tenPhongBan);
 		System.out.println("Quản lí phòng ban : " + quanLi);
+		System.out.println("Danh Sách nhân viên : ");
+		for (String nv : danhSachNhanVien) {
+			for (NhanVien nvCT : DanhSachNhanVien.dsnvct) {
+				if (nv.equals(nvCT.maNhanVien)&&!nvCT.isDeleted())
+					System.out.println("	- " + nv + " 	: " + nvCT.hoTen);
+			}
+		}
+		System.out.println("____________________________________");
 	}
 
 	public boolean isTrangThai() {
