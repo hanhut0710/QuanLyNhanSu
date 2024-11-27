@@ -38,7 +38,7 @@ public class Display {
 					System.out.println("5. Tìm kiếm nhân viên");
 					System.out.println("6. Thống kê danh sách nhân viên");
 					System.out.println("0. Thoát và lưu file");
-					System.out.print("Hãy nhập tab tab muốn vào: ");
+					System.out.print("Vui lòng nhập thao tác");
 					luaChon = Integer.parseInt(sc.nextLine());
 					if(luaChon == 1)
 						danhSachNhanVien.them();
