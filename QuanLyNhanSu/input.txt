@@ -1,0 +1,5 @@
+PhongIT	IT01	Cong Nghe Thong Tin	false	NV001	NV001	NV015	NV014	NV013
+PhongKiThuat	KT01	Ki thuat	false	NV005	NV005	NV012	NV011
+PhongTaiChinh	TC01	Tai chinh	false	NV007	NV007	NV004
+PhongTuyenDung	TD01	Tuyen dung	false	NV008	NV008	NV009
+PhongTuyenDung	TD02	Tuyen Dung	false	NV016	NV016

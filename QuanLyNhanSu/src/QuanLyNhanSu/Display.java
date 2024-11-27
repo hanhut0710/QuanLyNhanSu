@@ -12,6 +12,7 @@ public class Display {
 		danhSachNhanVien.docFile();
 		danhSachDuAn.docFile(danhSachNhanVien);
 		DanhSachPhongBan danhSachPhongBan = FileManager.docFile();
+		DanhSachNhanVien.dsnvct = danhSachNhanVien.ds;//Phong Ban
 		while(true) {
 			System.out.println("======= Hệ thống quản lí nhân sự ======");
 			System.out.println("1. Nhân sự ");
@@ -21,7 +22,7 @@ public class Display {
 			System.out.print("Hãy chọn tab muốn vào: ");
 			luaChon = Integer.parseInt(sc.nextLine());
 			if(luaChon == 0) {
-				System.out.println("Thoát chương trình !!");
+				System.out.println("Thoát chương trình !!");				
 				danhSachNhanVien.ghiFile();
 				danhSachDuAn.ghiFile();
 				break;
@@ -50,14 +51,15 @@ public class Display {
 						danhSachDuAn.timKiem();
 					else if(luaChon == 6)
 						danhSachDuAn.thongKe();
-					else if(luaChon == 0)
+					else if(luaChon == 0){
+						DanhSachNhanVien.dsnvct = danhSachNhanVien.ds;		//Phong ban			
 						break;
+					}
 					else 
 						System.out.println("Vui lòng nhập số từ (1-6) để chọn");
 				}
 			}
-			else if(luaChon == 2) {
-				while(true) {									
+			else if(luaChon == 2) {									
 					do {
 							System.out.println("================ MENU ================");
 							System.out.println("1. Thêm phòng ban");
@@ -71,6 +73,7 @@ public class Display {
 				            System.out.println("0. Thoát và lưu file");
 				            System.out.print("Nhập lựa chọn: ");
 				            luaChon = sc.nextInt();
+				            sc.nextLine();
 				
 				            switch(luaChon) {
 				            case 1 : 
@@ -82,7 +85,7 @@ public class Display {
 				                System.out.println("4. Phòng tuyển dụng");
 				                System.out.println("____________________________________");
 				                int loaiPhong = sc.nextInt();
-				             
+				                sc.nextLine();
 				                PhongBan phongBan = null;
 				                if(loaiPhong == 1)
 				                	phongBan = new PhongIT();
@@ -128,11 +131,10 @@ public class Display {
 				            	break;
 				            default:
 				            	System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại!!!");
-				            }				            
-					}while(luaChon!=0);						
-				}
-				
+				            }			
+					}while(luaChon!=0);										
 			}
+			
 			else if(luaChon == 3) {
 				while(true) {
 					System.out.println("================ MENU ================");
