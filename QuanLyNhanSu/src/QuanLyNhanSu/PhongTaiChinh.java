@@ -6,15 +6,29 @@ import java.util.Scanner;
 public class PhongTaiChinh extends PhongBan {
 
 	@Override
-	public void nhapThongTinPhongBan() {
+	public void nhapThongTinPhongBan(DanhSachPhongBan danhSachPhongBan) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Nhập mã phòng ban : ");
-		this.maPhongBan = sc.nextLine();
+		boolean isDuplicate;
+		do {
+			isDuplicate = false;
+			System.out.println("Nhập mã phòng ban: ");
+			this.maPhongBan = sc.nextLine();
+
+			for (PhongBan pb : danhSachPhongBan.getDanhSachPhongBan()) {
+				if (pb.getMaPhongBan().equals(this.maPhongBan)) {
+					System.out.println("Mã phòng ban đã tồn tại. Vui lòng nhập lại.");
+					isDuplicate = true;
+					break;
+				}
+			}
+		} while (isDuplicate);
+
 		System.out.println("Nhập tên phòng ban : ");
 		this.tenPhongBan = sc.nextLine();
+
 		boolean check = false;
-		boolean found = false;
 		while (!check) {
+			boolean found = false;
 			System.out.println("Nhập mã quản lý phòng ban: ");
 			this.quanLi = sc.nextLine();
 
@@ -22,6 +36,12 @@ public class PhongTaiChinh extends PhongBan {
 				if (quanLi.equals(nv.maNhanVien)) {
 					found = true;
 					if (nv instanceof QuanLi) {
+
+						if (kiemTraNhanVienTrongPhongBanKhac(quanLi, danhSachPhongBan)) {
+							System.out.println("Nhân viên này đã thuộc một phòng ban khác!!!");
+							break;
+						}
+
 						System.out.println("Đã nhập quản lí cho phòng !");
 						check = true;
 						danhSachNhanVien = Arrays.copyOf(danhSachNhanVien, danhSachNhanVien.length + 1);
@@ -62,18 +82,17 @@ public class PhongTaiChinh extends PhongBan {
 			String maNV;
 			boolean kt = false;
 			/* do while */ do {
-				boolean isValidInCompany = false;
+
 				System.out.println("Nhập mã viên thứ " + (i + 1) + " : ");
 				maNV = sc.nextLine();
 				// check manv
-				for (NhanVien nv : DanhSachNhanVien.dsnvct) {
-					if (kiemTraMaNhanVien(maNV)) { // check danh sach toan cong ty
-						isValidInCompany = true;
-						break;
-					}
-				}
-				if (!isValidInCompany) {
+				if (!kiemTraMaNhanVien(maNV)) { // check danh sach toan cong ty
 					System.out.println("Không tìm thấy nhân viên này trong danh sách công ty, vui lòng nhập lại !!!");
+					continue;
+				}
+
+				if (kiemTraNhanVienTrongPhongBanKhac(maNV, danhSachPhongBan)) {
+					System.out.println("Nhân viên này đã thuộc một phòng ban khác, vui lòng nhập mã nhân viên khác!");
 					continue;
 				}
 
@@ -105,4 +124,13 @@ public class PhongTaiChinh extends PhongBan {
 		}
 		return false;
 	}
+
+	private boolean kiemTraNhanVienTrongPhongBanKhac(String maNV, DanhSachPhongBan danhSachPhongBan) {
+		for (PhongBan phongBan : danhSachPhongBan.getDanhSachPhongBan())
+			for (String nv : phongBan.danhSachNhanVien)
+				if (maNV.equals(nv))
+					return true;
+		return false;
+	}
+
 }

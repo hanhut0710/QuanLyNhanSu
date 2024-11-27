@@ -9,9 +9,9 @@ public class Display {
 		int luaChon = 0;
 		DanhSachNhanVien danhSachNhanVien = new DanhSachNhanVien();
 		DanhSachDuAn danhSachDuAn = new DanhSachDuAn();
-		DanhSachPhongBan danhSachPhongBan = new DanhSachPhongBan();
 		danhSachNhanVien.docFile();
 		danhSachDuAn.docFile(danhSachNhanVien);
+		DanhSachPhongBan danhSachPhongBan = FileManager.docFile();
 		while(true) {
 			System.out.println("======= Hệ thống quản lí nhân sự ======");
 			System.out.println("1. Nhân sự ");
@@ -57,8 +57,79 @@ public class Display {
 				}
 			}
 			else if(luaChon == 2) {
-				while(true) {
-					
+				while(true) {									
+					do {
+							System.out.println("================MENU================");
+							System.out.println("1. Thêm phòng ban");
+				            System.out.println("2. Xóa phòng ban");
+				            System.out.println("3. Tìm kiếm phòng ban");
+				            System.out.println("4. Sửa thông tin phòng ban");
+				            System.out.println("5. Hiển thị thông tin phòng ban");	 
+				            System.out.println("6. Phục hồi phòng ban");	
+				            System.out.println("7. Thống kê phòng ban");
+				            System.out.println("8. Tìm kiếm nhân viên");
+				            System.out.println("0. Thoát và lưu file");
+				            System.out.print("Nhập lựa chọn: ");
+				            luaChon = sc.nextInt();
+				
+				            switch(luaChon) {
+				            case 1 : 
+				            	System.out.println("____________________________________");
+				            	System.out.println("Chọn loại phòng ban : ");
+				            	System.out.println("1. Phòng IT");
+				                System.out.println("2. Phòng kĩ thuật");
+				                System.out.println("3. Phòng tài chính");
+				                System.out.println("4. Phòng tuyển dụng");
+				                System.out.println("____________________________________");
+				                int loaiPhong = sc.nextInt();
+				             
+				                PhongBan phongBan = null;
+				                if(loaiPhong == 1)
+				                	phongBan = new PhongIT();
+				                else if(loaiPhong == 2)
+				                	phongBan = new PhongKiThuat();
+				                else if(loaiPhong == 3)
+				                	phongBan = new PhongTaiChinh();
+				                else if(loaiPhong == 4)
+				                	phongBan = new PhongTuyenDung();                 
+				                if(phongBan != null) {
+				                	phongBan.nhapThongTinPhongBan(danhSachPhongBan);
+				                	danhSachPhongBan.themPhongBan(phongBan);
+				                }
+				                else System.out.println("Không tồn tại phòng ban đó!!");
+				                break;
+				            case 2:	
+				            	danhSachPhongBan.xoa();
+				            	break;
+				            case 3:
+				            	danhSachPhongBan.timKiem();
+				            	break;
+				            case 4:
+				            	danhSachPhongBan.sua();
+				            	break;
+				            case 5:
+				            	System.out.println("=========Danh sách phòng ban========");
+				            	danhSachPhongBan.hienThiDanhSach();
+				            	break;
+				            case 6:
+				            	danhSachPhongBan.phucHoiPhongBan();
+				            	break;
+				            case 7:
+				            	danhSachPhongBan.thongKe();
+				            	break;
+				            case 8:
+				            	danhSachPhongBan.timKiemNV();
+				            	break;
+				            case 0:
+				            	FileManager.ghiFile(danhSachPhongBan);
+				            	System.out.println("========================================");
+								System.out.println("             	Thoát!!!!!!                 ");
+								System.out.println("========================================");
+				            	break;
+				            default:
+				            	System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại!!!");
+				            }				            
+					}while(luaChon!=0);						
 				}
 				
 			}

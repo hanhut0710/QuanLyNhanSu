@@ -45,7 +45,7 @@ public abstract class PhongBan {
 		this.danhSachNhanVien = danhSachNhanVien;
 	}
 
-	public abstract void nhapThongTinPhongBan();
+	public abstract void nhapThongTinPhongBan(DanhSachPhongBan danhSachPhongBan);
 
 	public void xuat(int stt) {
 		System.out.println("      -----Phòng Ban số " + stt + "-----");
@@ -53,11 +53,12 @@ public abstract class PhongBan {
 		System.out.println("Tên Phòng Ban : " + tenPhongBan);
 		System.out.println("Quản lí phòng ban : " + quanLi);
 		System.out.println("Danh Sách nhân viên : ");
-		for (NhanVien nvCT : DanhSachNhanVien.dsnvct)
-			for (String nv : danhSachNhanVien) {
-				if (nv.equals(nvCT.maNhanVien))
+		for (String nv : danhSachNhanVien) {
+			for (NhanVien nvCT : DanhSachNhanVien.dsnvct) {
+				if (nv.equals(nvCT.maNhanVien)&&!nvCT.isDeleted())
 					System.out.println("	- " + nv + " 	: " + nvCT.hoTen);
 			}
+		}
 		System.out.println("____________________________________");
 	}
 

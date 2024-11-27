@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.BufferedReader;
 
 public class DanhSachNhanVien implements QuanLiDanhSach{
+	public static NhanVien[] dsnvct=new NhanVien[0];  // su ly phong ban
 	public NhanVien ds [] = new NhanVien [0];
 	static Scanner sc = new Scanner(System.in);
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -36,7 +37,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	 	Bước 3. Tùy vào trường loaiNhanVien mà khởi tạo đối tượng tương ứng
 	 	Bước 4. Gọi các hàm set để cập nhật thông tin 7 trường cơ bản
 	 	Bước 5. Kiểm tra nv có là instance của các lớp ? => Set các trường tương ứng
-	 	Bước 6. Thêm nv vào mảng -> xuat tb nhap thanh cong
+	 	Bước 6. Thêm nv vào mảng
 	 	*/
 		try 
 		{
@@ -120,6 +121,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
+					System.out.println("Nhap thanh cong nhan vien " +hoTen);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);
@@ -838,6 +840,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		                    dsnv.thongKe();
 		                    break;
 		                case 8:
+		                	DanhSachNhanVien.dsnvct = dsnv.ds;
 		                	System.out.println("mã nhân viên: ");
 		                	System.out.println(dsnv.check(sc.nextLine()));
 		                    System.out.println("Thoat chuong trinh thanh cong!");
@@ -850,8 +853,11 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		            System.out.println("Thao tac khong hop le. Vui long nhap thao tac (chon 1-8)");
 		        }
 		    } while (choose != 8);
+		    
+		    		 
 		}
 
+		
 		@Override
 		public void docFile(DanhSachNhanVien danhSachNhanVien) {
 			// TODO Auto-generated method stub
