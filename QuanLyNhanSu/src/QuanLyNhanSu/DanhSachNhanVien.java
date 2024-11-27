@@ -373,8 +373,15 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					break;
 				case 1:
 					System.out.println("Moi nhap ma nhan vien moi: ");
-					nvCanSua.setMaNhanVien(sc.nextLine());
-					break;
+	                String maNhanVienMoi = sc.nextLine();
+	                
+	                // Kiểm tra mã nhân viên mới có bị trùng hay không
+	                while (kiemTraMaNhanVien(maNhanVienMoi) && !nvCanSua.getMaNhanVien().equals(maNhanVienMoi)) {
+	                    System.out.println("Ma nhan vien da ton tai. Vui long nhap lai");
+	                    maNhanVienMoi = sc.nextLine();
+	                }
+	                nvCanSua.setMaNhanVien(maNhanVienMoi);
+	                break;
 				case 2:
 					System.out.println("Moi nhap ho ten moi: ");
 					nvCanSua.setHoTen(sc.nextLine());
@@ -389,7 +396,14 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					break;
 				case 5:
 					System.out.println("Moi nhap so dien thoai moi: ");
-					nvCanSua.setSoDienThoai(sc.nextLine());
+					String soDienThoaiMoi = sc.nextLine();
+					while(kiemTraSoDienThoai(soDienThoaiMoi) && !nvCanSua.getSoDienThoai().equals(soDienThoaiMoi))
+					{
+						System.out.println("So dien thoai da ton tai. Vui long nhap lai");
+						soDienThoaiMoi = sc.nextLine();
+								
+					}
+					nvCanSua.setSoDienThoai(soDienThoaiMoi);
 					break;
 				
 				//Cac truong hop khac tuy thuoc vao loai nhan vien
