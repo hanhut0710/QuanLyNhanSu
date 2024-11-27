@@ -363,24 +363,30 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 	public void thongKe() {
 		int maxSoLuongNhanVien = danhSachDuAn[0].getDanhSachNhanVien().ds.length;
 		int minSoluongNhanVien = danhSachDuAn[0].getDanhSachNhanVien().ds.length;
-		int max = 0, min = 0;
 		for(int i=1; i<danhSachDuAn.length; i++) {
 			if(maxSoLuongNhanVien < danhSachDuAn[i].getDanhSachNhanVien().ds.length) {
 				maxSoLuongNhanVien = danhSachDuAn[i].getDanhSachNhanVien().ds.length;
-				max = i;
 			}
 			if(minSoluongNhanVien > danhSachDuAn[i].getDanhSachNhanVien().ds.length) {
 				minSoluongNhanVien = danhSachDuAn[i].getDanhSachNhanVien().ds.length;
-
-				min = i;
 			}
 		}
-		System.out.println("==== Dự án có nhiều nhân viên tham gia nhất ====");
-		System.out.printf("%-10s %-20s %-15s %-15s %15s","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lương nhân viên");
-		System.out.printf("%-10s %-20s %-15s %-15s %15s", this.danhSachDuAn[max].getMaDuAn(), this.danhSachDuAn[max].getTenDuAn(), this.danhSachDuAn[max].getNgayBatDau().getDate(), this.danhSachDuAn[max].getDuKienKetThuc().getDate(), maxSoLuongNhanVien);
-		System.out.println("==== Dự án có ít nhân viên tham gia nhất ====");
-		System.out.printf("%-10s %-20s %-15s %-15s %15s","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lương nhân viên");
-		System.out.printf("%-10s %-20s %-15s %-15s %15s", this.danhSachDuAn[min].getMaDuAn(), this.danhSachDuAn[min].getTenDuAn(), this.danhSachDuAn[min].getNgayBatDau().getDate(), this.danhSachDuAn[min].getDuKienKetThuc().getDate(), minSoluongNhanVien);
+		System.out.println("============================== Dự án có nhiều nhân viên tham gia nhất =======================================");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s\n","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lưọng nhân viên");
+		for(DuAn x : danhSachDuAn) {
+			if(x.getDanhSachNhanVien().ds.length == maxSoLuongNhanVien) {
+				System.out.printf("%-10s %-20s %-15s %-15s %15s\n", x.getMaDuAn(), x.getTenDuAn(), x.getNgayBatDau().getDate(), x.getDuKienKetThuc().getDate(), maxSoLuongNhanVien);
+
+			}
+		}
+		System.out.println("============================== Dự án có ít nhân viên tham gia nhất ==========================================");
+		System.out.printf("%-10s %-20s %-15s %-15s %15s\n","Mã dự án", "Tên dự án", "Ngày bắt đầu", "Ngày kết thúc", "Số lưọng nhân viên");
+		for(DuAn x : danhSachDuAn) {
+			if(x.getDanhSachNhanVien().ds.length == minSoluongNhanVien) {
+				System.out.printf("%-10s %-20s %-15s %-15s %15s\n", x.getMaDuAn(), x.getTenDuAn(), x.getNgayBatDau().getDate(), x.getDuKienKetThuc().getDate(), minSoluongNhanVien);
+
+			}
+		}
 	}
 	public void docFile(DanhSachNhanVien danhSachNhanVien)  {
 		// TODO Auto-generated method stub
@@ -437,6 +443,8 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 					String maNhanVien[] = Arrays.copyOfRange(part, 5, part.length);
 					for(int i=0; i<maNhanVien.length; i++) {
 						NhanVien nhanVien = danhSachNhanVien.check(maNhanVien[i]);
+						if(nhanVien == null)
+							continue;
 						duAn.themNhanVienVaoDuAn(nhanVien);
 					}
 					duAn.setMaDuAn(maDuAn);

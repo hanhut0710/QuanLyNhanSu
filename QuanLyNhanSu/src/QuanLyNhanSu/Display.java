@@ -28,7 +28,7 @@ public class Display {
 			}
 			else if(luaChon == 1) {
 				while(true) {
-					System.out.println("========= Menu =========");
+					System.out.println("================ MENU ================");
 					System.out.println("1. Thêm nhân viên mới");
 					System.out.println("2. Sửa nhân viên");
 					System.out.println("3. Xóa nhân viên");
@@ -59,7 +59,7 @@ public class Display {
 			else if(luaChon == 2) {
 				while(true) {									
 					do {
-							System.out.println("================MENU================");
+							System.out.println("================ MENU ================");
 							System.out.println("1. Thêm phòng ban");
 				            System.out.println("2. Xóa phòng ban");
 				            System.out.println("3. Tìm kiếm phòng ban");
@@ -135,7 +135,7 @@ public class Display {
 			}
 			else if(luaChon == 3) {
 				while(true) {
-					System.out.println("========= Menu =========");
+					System.out.println("================ MENU ================");
 					System.out.println("1. Thêm dự án mới");
 					System.out.println("2. Sửa dự án");
 					System.out.println("3. Xóa dự án");
