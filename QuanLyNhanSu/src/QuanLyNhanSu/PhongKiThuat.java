@@ -67,8 +67,8 @@ public class PhongKiThuat extends PhongBan {
 				soLuongNV = sc.nextInt();
 				sc.nextLine();
 
-				if (soLuongNV > 0) {
-					isValid = true;
+				if (soLuongNV >= 0) {
+					isValid = true;					
 				} else {
 					System.out.println("Số lượng nhân viên phải là số nguyên dương. Vui lòng nhập lại!");
 				}
