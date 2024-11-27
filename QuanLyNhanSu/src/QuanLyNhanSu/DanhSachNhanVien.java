@@ -215,7 +215,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	@Override
 	public void hienThiDanhSach()
 	{	/*Nếu isDeleted = true thì mới xuất ra, false thì không in nữa*/
-		System.out.println(ds.length);
 		for(int i=0; i < ds.length; i++)
 		{	
 			if(ds[i].isDeleted() == false)
