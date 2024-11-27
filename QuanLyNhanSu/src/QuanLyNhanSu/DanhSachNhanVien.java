@@ -289,7 +289,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					if(kiemTraSoDienThoai(nv.getSoDienThoai()))
 					{
 						System.out.println("So dien thoai da ton tai. Vui long nhap lai");
-						nv.nhapThongTinNhanVien();
+						nv.setSoDienThoai(sc.nextLine());
 						checkedSoDienThoai = false;
 					}
 					if(checkedMaNhanVien && checkedSoDienThoai)
