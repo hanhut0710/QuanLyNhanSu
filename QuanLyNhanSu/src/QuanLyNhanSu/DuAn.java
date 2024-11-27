@@ -35,7 +35,19 @@ public class DuAn implements Serializable{
 		System.out.println("Thêm nhân viên thành công !!!");
 	}
 	
+	public boolean checkDanhSachNhanVien(NhanVien x) {
+		for(NhanVien nhanVien : this.danhSachNhanVien.ds) {
+			if(x.equals(nhanVien))
+				return true;
+		}
+		return false;
+	}
+	
 	public void xoaNhanVienKhoiDuAn(NhanVien x) {
+		if(!checkDanhSachNhanVien(x)) {
+			System.out.println("Nhân viên hiện không có trong danh sách dự án");
+			return;
+		}
 		for(int i=0; i<this.danhSachNhanVien.ds.length - 1; i++) {
 			if(!x.equals(this.danhSachNhanVien.ds[i])) {
 				continue;
@@ -101,17 +113,19 @@ public class DuAn implements Serializable{
 		System.out.println("============================ Danh sách nhân viên của dự án "+this.maDuAn+" =================================");
 		System.out.printf("%-15s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
 		for(NhanVien x : danhSachNhanVien.ds) {
-			if(x instanceof NhanVienHopDong) {
-				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
-			}
-			else if(x instanceof NhanVienChinhThuc) {
-				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
-			}
-			else if(x instanceof QuanLi) {
-				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
-			}
-			else if(x instanceof ThucTapSinh) {
-				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
+			if(!x.isDeleted()) {
+				if(x instanceof NhanVienHopDong) {
+					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
+				}
+				else if(x instanceof NhanVienChinhThuc) {
+					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
+				}
+				else if(x instanceof QuanLi) {
+					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
+				}
+				else if(x instanceof ThucTapSinh) {
+					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
+				}
 			}
 		}
 		System.out.println("=================================================================================================");
