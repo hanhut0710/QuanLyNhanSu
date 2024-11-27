@@ -417,7 +417,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					{
 						QuanLi quanLi = (QuanLi) nvCanSua;
 						System.out.println("Moi nhap he so luong moi");
-						quanLi.heSoLuongQuanLi = Integer.parseInt(sc.nextLine());
+						quanLi.heSoLuongQuanLi = Double.parseDouble(sc.nextLine());
 					}
 					break;
 				case 7:

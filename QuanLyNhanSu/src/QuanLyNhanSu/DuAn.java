@@ -109,26 +109,33 @@ public class DuAn implements Serializable{
 	}
 	
 	public void xuatThongTinDanhSachNhanVien() {
-		System.out.println("============================ Danh sách nhân viên của dự án "+this.maDuAn+" =================================");
-		System.out.printf("%-15s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
-		for(NhanVien x : danhSachNhanVien.ds) {
-			if(!x.isDeleted()) {
-				if(x instanceof NhanVienHopDong) {
-					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên hợp đồng");
+		boolean succes = false;
+			try {
+				System.out.println("============================ Danh sách nhân viên của dự án "+this.maDuAn+" =================================");
+				System.out.printf("%-15s %-30s %-15s %-15s %-30s\n", "Mã nhân viên", "Họ tên", "Giới tính", "Số điện thoại", "Chức vụ");
+				for(int i=0; i<danhSachNhanVien.ds.length; i++) {
+					if(danhSachNhanVien.ds[i] == null)
+						continue;
+					if(!danhSachNhanVien.ds[i].isDeleted()) {
+						if(danhSachNhanVien.ds[i] instanceof NhanVienHopDong) {
+							System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",danhSachNhanVien.ds[i].getMaNhanVien(), danhSachNhanVien.ds[i].getHoTen(), danhSachNhanVien.ds[i].getGioiTinh(), danhSachNhanVien.ds[i].getSoDienThoai(), "Nhân viên hợp đồng");
+						}
+						else if(danhSachNhanVien.ds[i] instanceof NhanVienChinhThuc) {
+							System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",danhSachNhanVien.ds[i].getMaNhanVien(), danhSachNhanVien.ds[i].getHoTen(), danhSachNhanVien.ds[i].getGioiTinh(), danhSachNhanVien.ds[i].getSoDienThoai(), "Nhân viên chính thức");
+						}
+						else if(danhSachNhanVien.ds[i] instanceof QuanLi) {
+							System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",danhSachNhanVien.ds[i].getMaNhanVien(), danhSachNhanVien.ds[i].getHoTen(), danhSachNhanVien.ds[i].getGioiTinh(), danhSachNhanVien.ds[i].getSoDienThoai(), "Quản lý");
+						}
+						else if(danhSachNhanVien.ds[i] instanceof ThucTapSinh) {
+							System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",danhSachNhanVien.ds[i].getMaNhanVien(), danhSachNhanVien.ds[i].getHoTen(), danhSachNhanVien.ds[i].getGioiTinh(), danhSachNhanVien.ds[i].getSoDienThoai(), "Thực tập sinh");
+						}
+					}
+					
 				}
-				else if(x instanceof NhanVienChinhThuc) {
-					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Nhân viên chính thức");
-				}
-				else if(x instanceof QuanLi) {
-					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Quản lý");
-				}
-				else if(x instanceof ThucTapSinh) {
-					System.out.printf("%-15s %-30s %-15s %-15s %-30s\n",x.getMaNhanVien(), x.getHoTen(), x.getGioiTinh(), x.getSoDienThoai(), "Thực tập sinh");
-				}
+				System.out.println("=================================================================================================");
+			} catch (NullPointerException e) {
+				
 			}
-		}
-		System.out.println("=================================================================================================");
-
 	}
 	
 	public String getMaDuAn() {
