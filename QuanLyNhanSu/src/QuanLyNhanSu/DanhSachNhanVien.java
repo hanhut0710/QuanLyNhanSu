@@ -29,7 +29,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		System.out.println("================================================");
 	}
 	
-
 	public void docFile()
 	{	/*
 	 	Bước 1. Khởi tạo file
@@ -97,7 +96,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					if(nv instanceof NhanVienChinhThuc)
 					{
 						NhanVienChinhThuc nvChinhThuc = (NhanVienChinhThuc) nv;
-						nvChinhThuc.heSoLuongNhanVien = Integer.parseInt(s[7].trim());
+						nvChinhThuc.heSoLuongNhanVien = Double.parseDouble(s[7].trim());
 						nvChinhThuc.luongNhanVien = Double.parseDouble(s[8].trim());
 					}
 					else if(nv instanceof NhanVienHopDong)
@@ -110,13 +109,13 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					else if(nv instanceof ThucTapSinh)
 					{
 						ThucTapSinh thucTapSinh = (ThucTapSinh) nv;
-						thucTapSinh.heSoLuongThucTap = Integer.parseInt(s[7].trim());
+						thucTapSinh.heSoLuongThucTap = Double.parseDouble(s[7].trim());
 						thucTapSinh.tienPhuCap = Double.parseDouble(s[8].trim());	
 					}
 					else if(nv instanceof QuanLi)
 					{
 						QuanLi quanLi = (QuanLi) nv;
-						quanLi.heSoLuongQuanLi = Integer.parseInt(s[7].trim());
+						quanLi.heSoLuongQuanLi = Double.parseDouble(s[7].trim());
 						quanLi.luongQuanLi = Double.parseDouble(s[8].trim());
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
@@ -143,7 +142,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 		return null;
 	}
-	
+
 	public void ghiFile()
 	{
 		try {
@@ -225,8 +224,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 			
 		}
 	}
-	
-	
 	
 	public void them()
 	{	
@@ -856,8 +853,5 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		    		 
 		}
 
-		
-
-	
 	
 }

@@ -12,7 +12,18 @@ public class NhanVienHopDong extends NhanVien implements Luong {
     Scanner sc = new Scanner(System.in);
 
     public NhanVienHopDong() {}
-
+    
+    public void setLuongHopDong(double luongHopDong) {
+    	while(true) {
+			if(luongHopDong < 0) {
+					System.out.println("Luong phai lon hon 0.");
+					luongHopDong = sc.nextDouble();
+			}else {
+					this.luongHopDong = luongHopDong;
+					break;
+			}
+		}
+    }
     @Override
     public void nhapThongTinNhanVien() {
         System.out.println("======NHAP THONG TIN NHAN VIEN HOP DONG=====");
@@ -46,7 +57,7 @@ public class NhanVienHopDong extends NhanVien implements Luong {
         }
 
         System.out.println("Nhap luong hop dong: ");
-        luongHopDong = sc.nextDouble();
+        setLuongHopDong(sc.nextDouble());
     }
 
     @Override
