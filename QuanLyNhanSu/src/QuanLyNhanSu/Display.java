@@ -1,5 +1,6 @@
 package QuanLyNhanSu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Display {
@@ -186,8 +187,10 @@ public class Display {
 							
 						}
 					}
-				} catch (NumberFormatException e) {
+				} catch (InputMismatchException e) {
 					// TODO: handle exception
+					System.out.println("Lỗi: Vui lòng nhập số!!!!");
+				} catch (NumberFormatException e) {
 					System.out.println("Lỗi: Vui lòng nhập số!!!!");
 				}
 				
