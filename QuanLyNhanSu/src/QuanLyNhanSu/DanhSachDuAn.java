@@ -470,7 +470,7 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		}
 		
 	}
-	@Override
+	
 	public void ghiFile() {
 		// TODO Auto-generated method stub
 //		try {
@@ -605,10 +605,6 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 		}
 	}
 
-	@Override
-	public void docFile() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	
 }

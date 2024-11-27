@@ -32,7 +32,6 @@ public class DuAn implements Serializable{
 	public void themNhanVienVaoDuAn(NhanVien x) {
 		this.danhSachNhanVien.ds = Arrays.copyOf(this.danhSachNhanVien.ds, this.danhSachNhanVien.ds.length + 1);
 		this.danhSachNhanVien.ds[this.danhSachNhanVien.ds.length -1] = x;
-		System.out.println("Thêm nhân viên thành công !!!");
 	}
 	
 	public boolean checkDanhSachNhanVien(NhanVien x) {

@@ -29,7 +29,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		System.out.println("================================================");
 	}
 	
-	@Override
+
 	public void docFile()
 	{	/*
 	 	Bước 1. Khởi tạo file
@@ -121,7 +121,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 					}
 					ds=Arrays.copyOf(ds, ds.length+1);
 					ds[ds.length - 1]= nv;
-					System.out.println("Nhap thanh cong nhan vien " +hoTen);
 				}
 				else {
 					System.out.println("Du lieu khong hop le" +st);
@@ -144,7 +143,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 		return null;
 	}
-	@Override
+	
 	public void ghiFile()
 	{
 		try {
@@ -228,7 +227,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	}
 	
 	
-	@Override
+	
 	public void them()
 	{	
 		while(true)
@@ -858,11 +857,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 
 		
-		@Override
-		public void docFile(DanhSachNhanVien danhSachNhanVien) {
-			// TODO Auto-generated method stub
-			
-		}
 
 	
 	
