@@ -2,19 +2,41 @@ package QuanLyNhanSu;
 
 
 public class NhanVienChinhThuc extends NhanVien implements Luong {
-    public int heSoLuongNhanVien;
+    public double heSoLuongNhanVien;
     public double luongNhanVien;
 
     public NhanVienChinhThuc() {};
-
+    
+    public void setHeSoLuongNhanVien(double heSoLuongNhanVien) {
+    	while(true) {
+			if(heSoLuongNhanVien < 0 || heSoLuongNhanVien >= 8) {
+					System.out.println("He so luong phai lon hon 0 va nho hon 8.");
+					heSoLuongNhanVien = sc.nextDouble();
+			}else {
+					this.heSoLuongNhanVien = heSoLuongNhanVien;
+					break;
+			}
+		}
+    }
+    public void setLuongNhanVien(double luongNhanVien) {
+    	while(true) {
+			if(luongNhanVien < 0) {
+					System.out.println("Luong phai lon hon 0.");
+					luongNhanVien = sc.nextDouble();
+			}else {
+					this.luongNhanVien = luongNhanVien;
+					break;
+			}
+		}
+    }
     @Override
     public void nhapThongTinNhanVien() {
         System.out.println("=====Nhap thong tin nhan vien chinh thuc=====");
         super.nhapThongTinNhanVien();
         System.out.println("Nhap he so luong nhan vien: ");
-        heSoLuongNhanVien = sc.nextInt();
+        setHeSoLuongNhanVien(sc.nextDouble());
         System.out.println("Nhap luong nhan vien: ");
-        luongNhanVien = sc.nextDouble();
+        setLuongNhanVien(sc.nextDouble());
     }
     
     @Override
