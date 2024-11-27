@@ -144,7 +144,7 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		}
 		return null;
 	}
-	@Override
+
 	public void ghiFile()
 	{
 		try {
@@ -228,7 +228,6 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 	}
 	
 	
-	@Override
 	public void them()
 	{	
 		while(true)
@@ -857,13 +856,5 @@ public class DanhSachNhanVien implements QuanLiDanhSach{
 		    		 
 		}
 
-		
-		@Override
-		public void docFile(DanhSachNhanVien danhSachNhanVien) {
-			// TODO Auto-generated method stub
-			
-		}
-
-	
 	
 }
