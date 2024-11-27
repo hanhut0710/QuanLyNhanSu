@@ -25,6 +25,7 @@ public class Display {
 				System.out.println("Thoát chương trình !!");				
 				danhSachNhanVien.ghiFile();
 				danhSachDuAn.ghiFile();
+				FileManager.ghiFile(danhSachPhongBan);
 				break;
 			}
 			else if(luaChon == 1) {
@@ -36,7 +37,7 @@ public class Display {
 					System.out.println("4. Hiển thị danh sách nhân viên");
 					System.out.println("5. Tìm kiếm nhân viên");
 					System.out.println("6. Thống kê danh sách nhân viên");
-					System.out.println("0. Thoát");
+					System.out.println("0. Thoát và lưu file");
 					System.out.print("Hãy nhập tab tab muốn vào: ");
 					luaChon = Integer.parseInt(sc.nextLine());
 					if(luaChon == 1)
@@ -48,11 +49,15 @@ public class Display {
 					else if(luaChon == 4)
 						danhSachNhanVien.hienThiDanhSach();
 					else if(luaChon == 5)
-						danhSachDuAn.timKiem();
+						danhSachNhanVien.timKiem();
 					else if(luaChon == 6)
-						danhSachDuAn.thongKe();
+						danhSachNhanVien.thongKe();
 					else if(luaChon == 0){
-						DanhSachNhanVien.dsnvct = danhSachNhanVien.ds;		//Phong ban			
+						DanhSachNhanVien.dsnvct = danhSachNhanVien.ds;//Phong ban		
+						danhSachNhanVien.ghiFile();		
+						System.out.println("========================================");
+						System.out.println("             	Thoát!!!!!!                 ");
+						System.out.println("========================================");
 						break;
 					}
 					else 
@@ -146,9 +151,8 @@ public class Display {
 					System.out.println("6. Thống kê dự án");
 					System.out.println("7. Thêm nhân viên vào dự án");
 					System.out.println("8. Xóa nhân viên khỏi dự án");
-					System.out.println("9. Lưu dự án hiện có");
-					System.out.println("10. Dữ liệu dự án");
-					System.out.println("0. Thoát");
+					System.out.println("9. Dữ liệu dự án");
+					System.out.println("0. Thoát và lưu file.");
 					System.out.print("Hãy nhập tab tab muốn vào: ");
 					luaChon = Integer.parseInt(sc.nextLine());
 					if(luaChon == 1)
@@ -168,11 +172,14 @@ public class Display {
 					else if(luaChon == 8)
 						danhSachDuAn.xoaNhanVienKhoiDanhSach(danhSachNhanVien);
 					else if(luaChon == 9)
-						danhSachDuAn.ghiFile();
-					else if(luaChon == 10)
 						danhSachDuAn.history();
-					else if(luaChon == 0)
+					else if(luaChon == 0) {
+						danhSachDuAn.ghiFile();
+						System.out.println("========================================");
+						System.out.println("             	Thoát!!!!!!                 ");
+						System.out.println("========================================");
 						break;
+					}
 					else 
 						System.out.println("Vui lòng nhập số từ (1-10) để chọn");
 					

@@ -10,7 +10,7 @@ public class NhanVien {
 	protected String hoTen;
 	protected String gioiTinh;
 	protected LocalDate ngaySinh;
-	protected String soDienThoai;
+	protected String soDienThoai;	
 	protected boolean isDeleted;
 	
 	static Scanner sc = new Scanner(System.in);
