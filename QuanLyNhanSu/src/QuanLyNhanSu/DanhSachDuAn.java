@@ -224,7 +224,11 @@ public class DanhSachDuAn implements QuanLiDanhSach, Serializable {
 				}
 			}
 		}
-		
+		for(DuAn x : danhSachDuAn) {
+			if(x.isTrangThaiXoa()) {
+				x.getDanhSachNhanVien().ds = Arrays.copyOf(x.getDanhSachNhanVien().ds, x.getDanhSachNhanVien().ds.length - x.getDanhSachNhanVien().ds.length);
+			}
+		}
 	}
 	
 	
